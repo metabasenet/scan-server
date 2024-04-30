@@ -1,10 +1,8 @@
 package com.ether.data.service.impl;
 
-import com.ether.data.dao.TransactionCountPerDayMapper;
-import com.ether.data.dao.TransactionErc20Mapper;
-import com.ether.data.dao.TransactionMapper;
-import com.ether.data.dao.TransactionReceiptMapper;
+import com.ether.data.dao.*;
 import com.ether.data.entity.Transaction;
+import com.ether.data.entity.TransactionPlatform;
 import com.ether.data.service.TransactionService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,6 +24,9 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionReceiptMapper transactionReceiptMapper;
     @Autowired
     private TransactionCountPerDayMapper transactionCountPerDayMapper;
+    @Autowired
+    private TransactionPlatformMapper transactionPlatformMapper;
+
     @Autowired
     private CacheManager cacheManager;
 
@@ -58,6 +59,12 @@ public class TransactionServiceImpl implements TransactionService {
         PageHelper.startPage(page, pageSize);
         List<Map> list = transactionErc20Mapper.selectByTransactionHash(hash);
         return new PageInfo<>(list);
+    }
+
+    @Override
+    public List<TransactionPlatform> getPlatformTransactionInfo(String transactionHash) {
+        List<TransactionPlatform> list = transactionPlatformMapper.selectByHash(transactionHash);
+        return list;
     }
 
     @Override

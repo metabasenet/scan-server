@@ -3,6 +3,7 @@ package com.ether.data.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ether.data.entity.Transaction;
+import com.ether.data.entity.TransactionPlatform;
 import com.ether.data.service.TransactionService;
 import com.ether.data.util.ResultUtils;
 import com.github.pagehelper.PageInfo;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -55,16 +57,22 @@ public class TransactionController {
         return ResultUtils.successResult(mapList);
     }
 
-    @GetMapping("/page1")
-    public JSONObject pageBlock(Integer page, Integer pageSize) {
-        PageInfo<Transaction> pageInfo = transactionServiceImpl.getTransactionByPage1(page, pageSize);
-        return ResultUtils.successResult(pageInfo);
+    @GetMapping("/getPlatformTransactionInfo")
+    public JSONObject getPlatformTransactionInfo(String transactionHash) {
+        List<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionInfo(transactionHash);
+        return ResultUtils.successResult(mapList);
     }
 
-    @GetMapping("/page2")
-    public JSONObject pageBlock2(Integer page, Integer pageSize) {
-        Cache.ValueWrapper res = cacheManager.getCache("Transaction").get("0x00a91dbf1be6f22ffcf01c690960da8d8183eb8e1f8a279c59c2d932f3aac3ec");
-
-        return ResultUtils.successResult(res.get());
-    }
+//    @GetMapping("/page1")
+//    public JSONObject pageBlock(Integer page, Integer pageSize) {
+//        PageInfo<Transaction> pageInfo = transactionServiceImpl.getTransactionByPage1(page, pageSize);
+//        return ResultUtils.successResult(pageInfo);
+//    }
+//
+//    @GetMapping("/page2")
+//    public JSONObject pageBlock2(Integer page, Integer pageSize) {
+//        Cache.ValueWrapper res = cacheManager.getCache("Transaction").get("0x00a91dbf1be6f22ffcf01c690960da8d8183eb8e1f8a279c59c2d932f3aac3ec");
+//
+//        return ResultUtils.successResult(res.get());
+//    }
 }

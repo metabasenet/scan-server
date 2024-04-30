@@ -2,6 +2,8 @@ package com.ether.data.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ether.data.common.Web3Client;
+import com.ether.data.entity.MntPrice;
+import com.ether.data.service.MntPriceService;
 import com.ether.data.service.TransactionService;
 import com.ether.data.util.LocalCacheManager;
 import com.ether.data.util.ResultUtils;
@@ -27,11 +29,14 @@ public class MarketController {
     @Autowired
     private TransactionService transactionServiceImpl;
 
+    @Autowired
+    private MntPriceService mntPriceServiceImpl;
 
     @GetMapping("/getPrice")
     public Map getPrice() {
+        MntPrice mntPrice = mntPriceServiceImpl.getPrice();
         Map<String, String> map = new HashMap<>();
-        map.put("price", "9.65");
+        map.put("price", mntPrice.getPrice());
         return map;
     }
 

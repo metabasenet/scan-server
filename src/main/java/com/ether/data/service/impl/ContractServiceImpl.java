@@ -38,12 +38,12 @@ public class ContractServiceImpl implements ContractService {
     public PageInfo<Map> getContractTransactionByContractAddress(String contractAddress, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
         List<Map> list = transactionErc20Mapper.getContractTransactionByContractAddress(contractAddress);
-//        for (Map<String, String> map : list) {
-//            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
-//            map.put("from", fromAddress);
-//            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
-//            map.put("to", toAddress);
-//        }
+        for (Map<String, String> map : list) {
+            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
+            map.put("from", fromAddress);
+            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
+            map.put("to", toAddress);
+        }
         return new PageInfo<>(list);
     }
 
@@ -52,24 +52,24 @@ public class ContractServiceImpl implements ContractService {
         PageHelper.startPage(page, pageSize);
 //        address = address.toLowerCase().replace("0x", "0x000000000000000000000000");
         List<Map> list = transactionErc20Mapper.getContractTransactionByAddress(address);
-//        for (Map<String, String> map : list) {
-//            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
-//            map.put("from", fromAddress);
-//            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
-//            map.put("to", toAddress);
-//        }
+        for (Map<String, String> map : list) {
+            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
+            map.put("from", fromAddress);
+            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
+            map.put("to", toAddress);
+        }
         return new PageInfo<>(list);
     }
 
     public PageInfo<Map> selectAllContractTransation(Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
         List<Map> list = transactionErc20Mapper.selectAllContractTransation();
-//        for (Map<String, String> map : list) {
-//            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
-//            map.put("from", fromAddress);
-//            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
-//            map.put("to", toAddress);
-//        }
+        for (Map<String, String> map : list) {
+            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
+            map.put("from", fromAddress);
+            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
+            map.put("to", toAddress);
+        }
         return new PageInfo<>(list);
     }
 

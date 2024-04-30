@@ -29,21 +29,21 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <javaModelGenerator targetPackage="com.ether.data.entity"
-                            targetProject="F:\IDEAWork\ether/src/main/java">
+                            targetProject="F:\IDEAWork\scan-server/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--Mapper.xml -->
-        <sqlMapGenerator targetPackage="mybatis" targetProject="F:\IDEAWork\ether/src/main/resources/">
+        <sqlMapGenerator targetPackage="mybatis" targetProject="F:\IDEAWork\scan-server/src/main/resources/">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--DAO-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.ether.data.dao"
-                             targetProject="F:\IDEAWork\ether/src/main/java">
+                             targetProject="F:\IDEAWork\scan-server/src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="lasted_transaction_count" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="mnt_price" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 <!--        <table tableName="lasted_transaction_fee" enableCountByExample="false" enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->

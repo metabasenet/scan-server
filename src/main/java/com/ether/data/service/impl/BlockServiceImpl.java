@@ -36,6 +36,10 @@ public class BlockServiceImpl implements BlockService {
 
     @Override
     public PageInfo<Block> getBlockByPage(Integer page, Integer pageSize) {
+        if (page * pageSize > 10000) {
+
+        }
+
         PageHelper.startPage(page, pageSize);
         List<Block> list = blockMapper.selectAll();
         return new PageInfo<>(list);

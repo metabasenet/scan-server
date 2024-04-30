@@ -1,6 +1,7 @@
 package com.ether.data.service;
 
 import com.ether.data.entity.Transaction;
+import com.ether.data.entity.TransactionPlatform;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface TransactionService {
     PageInfo<Map> getTransactionByAddress(String address, Integer page, Integer pageSize);
 
     PageInfo<Map> getTransactionLogs(String hash, Integer page, Integer pageSize);
+
+    List<TransactionPlatform> getPlatformTransactionInfo(String transactionHash);
 
     List<Map> transcationCountInfo();
 

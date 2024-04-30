@@ -48,11 +48,10 @@ public class TaskServiceImpl {
         lastedTransactionFee.put("lastedTransactionFee", map);
     }
 
-//    @CachePut
-//    @Scheduled(cron = "${system.task.lastedTransactionInfo}")
-//    public void lastedTransactionTask() {
+    @PostConstruct
+    public void blockCache() {
 //        Map map = transactionReceiptMapper.lastedTransactionFee();
 //        Cache lastedTransactionCount = cacheManager.getCache("LastedTransactionFee");
 //        lastedTransactionCount.put("lastedTransactionFee", map);
-//    }
+    }
 }

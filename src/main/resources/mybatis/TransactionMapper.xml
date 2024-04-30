@@ -386,7 +386,7 @@
                B.`status`,
                C.timestamp,
                A.methodHash,
-               E.method
+               SUBSTRING_INDEX(E.method,'(',1) as method
         FROM `transaction` A
                  LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
                  LEFT JOIN block C ON A.blockHash = C.hash
@@ -415,7 +415,7 @@
                B.`status`,
                C.timestamp,
                A.methodHash,
-               E.method
+               SUBSTRING_INDEX(E.method,'(',1) as method
         FROM `transaction` A
                  LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
                  LEFT JOIN block C ON A.blockHash = C.hash
@@ -444,12 +444,13 @@
                B.`status`,
                C.timestamp,
                A.methodHash,
-               E.method
+               SUBSTRING_INDEX(E.method,'(',1) as method
         FROM `transaction` A
                  LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
                  LEFT JOIN block C ON A.blockHash = C.hash
                  LEFT JOIN method_hash E ON A.methodHash = E.`hash`
         WHERE A.`blockHash` = #{blockHash,jdbcType=VARCHAR}
+        order by A.blockNumber desc
     </select>
 
     <select id="selectTransactionByAddress" parameterType="java.lang.String" resultType="java.util.Map">
@@ -473,13 +474,14 @@
                B.`status`,
                C.timestamp,
                A.methodHash,
-               E.method
+               SUBSTRING_INDEX(E.method,'(',1) as method
         FROM `transaction` A
                  LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
                  LEFT JOIN block C ON A.blockHash = C.hash
                  LEFT JOIN method_hash E ON A.methodHash = E.`hash`
         where (A.`from` = #{address,jdbcType=VARCHAR}
             or A.`to` = #{address,jdbcType=VARCHAR})
+        order by A.blockNumber desc
     </select>
 
     <select id="selectAll" resultMap="ResultMapWithBLOBs">

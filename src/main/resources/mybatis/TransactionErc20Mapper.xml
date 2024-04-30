@@ -180,7 +180,15 @@
 
 
     <select id="getContractTransactionByContractAddress" parameterType="java.lang.String" resultType="java.util.Map">
-        SELECT A.*,
+        SELECT A.transactionHash,
+               A.blockHash,
+               A.contractAddress,
+               A.`index`,
+               SUBSTRING(A.methodHash, 1, 10) as methodHash,
+               A.blockNumber,
+               A.`from`,
+               A.`to`,
+               A.`value`,
                B.`timestamp`,
                C.cumulativeGasUsed,
                C.effectiveGasPrice,
@@ -188,40 +196,55 @@
         FROM transaction_erc20 A
                  LEFT JOIN block B ON A.blockHash = B.`hash`
                  LEFT JOIN transaction_receipt C ON A.transactionHash = C.transactionHash
-                 LEFT JOIN method_hash D ON A.methodHash = D.hash
+                 LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10) = D.hash
         where A.contractAddress = #{contractaddress,jdbcType=VARCHAR}
-          and (A.methodHash = '0xddf252ad'
-            or A.methodHash = '0x8c5be1e5')
+          and SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')
         order by A.blockNumber desc, A.transactionHash asc, A.index asc
     </select>
 
     <select id="getContractTransactionByAddress" parameterType="java.lang.String" resultType="java.util.Map">
-        SELECT A.*,
+        SELECT A.transactionHash,
+               A.blockHash,
+               A.contractAddress,
+               A.`index`,
+               SUBSTRING(A.methodHash, 1, 10) as methodHash,
+               A.blockNumber,
+               A.`from`,
+               A.`to`,
+               A.`value`,
                B.`timestamp`,
                C.ercName,
                C.ercSymbol,
                C.decimals,
                D.method
-        FROM (SELECT * FROM transaction_erc20 WHERE methodHash  in ('0xddf252ad', '0x8c5be1e5')) A
+        FROM (SELECT * FROM transaction_erc20 WHERE SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')) A
                  LEFT JOIN block B ON A.blockHash = B.`hash`
                  LEFT JOIN contract C ON A.contractAddress = C.contractAddress
-                 LEFT JOIN method_hash D ON A.methodHash = D.hash
+                 LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10) = D.hash
         where A.from = #{address,jdbcType=VARCHAR}
            or A.to = #{address,jdbcType=VARCHAR}
         order by A.blockNumber desc, A.transactionHash asc, A.index asc
     </select>
 
     <select id="selectAllContractTransation" resultType="java.util.Map">
-        SELECT A.*,
+        SELECT A.transactionHash,
+               A.blockHash,
+               A.contractAddress,
+               A.`index`,
+               SUBSTRING(A.methodHash, 1, 10) as methodHash,
+               A.blockNumber,
+               A.`from`,
+               A.`to`,
+               A.`value`,
                B.`timestamp`,
                C.ercName,
                C.ercSymbol,
                C.decimals,
                D.method
-        FROM (SELECT * FROM transaction_erc20 WHERE methodHash  in ('0xddf252ad', '0x8c5be1e5')) A
+        FROM (SELECT * FROM transaction_erc20 WHERE SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')) A
                  LEFT JOIN block B ON A.blockHash = B.`hash`
                  LEFT JOIN contract C ON A.contractAddress = C.contractAddress
-                 LEFT JOIN method_hash D ON A.methodHash = D.HASH
+                 LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10)  = D.`hash`
         ORDER BY A.blockNumber DESC,
                  A.transactionHash ASC,
                  A.index ASC
@@ -229,7 +252,15 @@
 
     <select id="selectByTransactionHash" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+            transactionHash,
+            blockHash,
+            contractAddress,
+            `index`,
+            SUBSTRING(A.methodHash, 1, 10) as methodHash,
+            blockNumber,
+            `from`,
+            `to`,
+            `value`,
         from transaction_erc20
         where transactionHash = #{transactionhash,jdbcType=VARCHAR}
         ORDER BY `index`
@@ -238,6 +269,7 @@
     <select id="getContractTransactionCountByAddress" parameterType="java.lang.String" resultType="java.lang.Long">
         select count(1)
         from transaction_erc20
-        where contractAddress = #{contractaddress,jdbcType=VARCHAR} and methodHash  in ('0xddf252ad', '0x8c5be1e5')
+        where contractAddress = #{contractaddress,jdbcType=VARCHAR}
+          and SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')
     </select>
 </mapper>
