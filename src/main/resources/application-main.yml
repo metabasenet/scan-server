@@ -1,0 +1,61 @@
+
+spring:
+  resources:
+    cache:
+      period: 0
+    chain:
+      compressed: true
+      cache: false
+    static-locations: classpath:/static/,file:D:/biaoZhuData/upload/,classpath:/static/dcv/
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 1000MB
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: 'jdbc:mysql://127.0.0.1:3307/mnt_chain?useUnicode=true&characterEncoding=utf-8&useSSL=FALSE&serverTimezone=GMT%2B8&allowMultiQueries=true'
+      username: mnt
+      password: 1234qwer
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      filters: stat,wall
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        session-stat-enable: true
+        session-stat-max-count: 500
+        principal-session-name: web_user
+        profile-enable: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+  jackson:
+    default-property-inclusion: non_null
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    call-setters-on-nulls: true
+    map-underscore-to-camel-case: true
+    return-instance-for-empty-row: true
+  mapper-locations: classpath*:mybatis/*Mapper.xml
+  type-aliases-package: com.dch.biz.entity
+  check-config-location: true
+
+system:
+  uploadPath: /home/ubuntu/blockScan/blockScan/solidityCompile
+  MainNet: https://rpc.metabasenet.site
+  task:
+    transactionCountPerDay: 59 59 11 * * ?
+    lastedTransactionInfo: 1 1/5 * * * ?
+logging:
+  level:
+    com.data.manger.dao: info
+

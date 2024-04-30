@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <classPathEntry
+            location="F:\JavaDevTool\MavenRepository\mysql\mysql-connector-java\8.0.19\mysql-connector-java-8.0.19.jar"/>
+    <context id="mysql" targetRuntime="MyBatis3">
+        <!--        <commentGenerator type="com.dhcClinicalES.dataImport.generator.MyCommentGenerator">-->
+        <!--            &lt;!&ndash;            <property name="author" value="Michael Chow"/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            <property name="dateFormat" value="yyyy/MM/dd"/>&ndash;&gt;-->
+        <!--        </commentGenerator>-->
+
+
+        <!-- implements Serializable -->
+        <!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>-->
+        <!--        <plugin type="org.support.generator.plugins.CustomPlugin"></plugin>-->
+
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/eth?characterEncoding=utf8&amp;serverTimezone=GMT%2B8"
+                        userId="root"
+                        password="1234560">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="com.ether.data.entity"
+                            targetProject="F:\IDEAWork\ether/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--Mapper.xml -->
+        <sqlMapGenerator targetPackage="mybatis" targetProject="F:\IDEAWork\ether/src/main/resources/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--DAO-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ether.data.dao"
+                             targetProject="F:\IDEAWork\ether/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="lasted_transaction_count" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+<!--        <table tableName="lasted_transaction_fee" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+
+    </context>
+</generatorConfiguration>
