@@ -250,18 +250,20 @@
                  A.index ASC
     </select>
 
-    <select id="selectByTransactionHash" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByTransactionHash" parameterType="java.lang.String" resultType="java.util.Map">
         select
-            transactionHash,
-            blockHash,
-            contractAddress,
-            `index`,
-            SUBSTRING(A.methodHash, 1, 10) as methodHash,
-            blockNumber,
-            `from`,
-            `to`,
-            `value`,
-        from transaction_erc20
+            A.transactionHash,
+            A.blockHash,
+            A.contractAddress,
+            A.`index`,
+            A.methodHash,
+            A.blockNumber,
+            A.`from`,
+            A.`to`,
+            A.`value`,
+            D.method
+        from transaction_erc20 A
+        LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10)  = D.`hash`
         where transactionHash = #{transactionhash,jdbcType=VARCHAR}
         ORDER BY `index`
     </select>

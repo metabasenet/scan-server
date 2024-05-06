@@ -226,6 +226,12 @@
         where number = #{number,jdbcType=DECIMAL}
     </update>
 
+
+    <select id="selectAllCount" resultType="java.lang.Long">
+        select count(1)
+        from block
+    </select>
+
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -256,5 +262,23 @@
         union
         SELECT 'all' as type, sum(transactionCount) as count
         FROM block
+    </select>
+
+    <select id="selectBlockCacheInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from block order by number desc limit ${maxElementNumber}
+    </select>
+
+    <select id="selectBlockCacheInfoByFixedFreq" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from block order by number desc limit 10
+    </select>
+
+    <select id="selectAllTest1" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from block order by number limit 10
     </select>
 </mapper>

@@ -1,36 +1,28 @@
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://www.ehcache.org/v3"
-        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
-        xsi:schemaLocation="
-            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
-            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
-    <service>
-        <jsr107:defaults enable-statistics="true"/>
-    </service>
-        <cache alias="Block">
-            <key-type>java.lang.Long</key-type>
-            <value-type>com.ether.data.entity.Block</value-type>
-            <expiry>
-                <ttl unit="minutes">100</ttl>
-            </expiry>
-            <resources>
-                <heap unit="entries">10</heap>
-                <offheap unit="MB">100</offheap>
-            </resources>
-        </cache>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
 
+    <diskStore path="F:\IDEAWork\scan-server/ehcache"/>
+    <!--    <defaultCache-->
+    <!--            maxElementsInMemory="10"-->
+    <!--            overflowToDisk="false"-->
+    <!--            eternal="false"-->
+    <!--            timeToIdleSeconds="120"-->
+    <!--            timeToLiveSeconds="120"-->
+    <!--            maxElementsOnDisk="10000000"-->
+    <!--            diskExpiryThreadIntervalSeconds="120"-->
+    <!--            memoryStoreEvictionPolicy="FIFO">-->
+    <!--        <persistence strategy="localTempSwap"/>-->
+    <!--    </defaultCache>-->
 
-    <cache alias="TransactionVO">
-        <key-type>java.lang.Long</key-type>
-        <value-type>com.ether.data.vo.TransactionVO</value-type>
-        <expiry>
-            <ttl unit="minutes">100</ttl>
-        </expiry>
-        <resources>
-            <heap unit="entries">10</heap>
-            <offheap unit="MB">100</offheap>
-        </resources>
+    <cache name="BlockServerCache"
+           maxElementsInMemory="5"
+           overflowToDisk="false"
+           eternal="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           maxElementsOnDisk="1"
+           diskExpiryThreadIntervalSeconds="120"
+           memoryStoreEvictionPolicy="FIFO">
+        <persistence strategy="localTempSwap"/>
     </cache>
-
-
-</config>
+</ehcache>

@@ -9,11 +9,16 @@ import com.ether.data.entity.Contract;
 import com.ether.data.service.BlockService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +32,11 @@ public class BlockServiceImpl implements BlockService {
     private PlatformBalanceMapper platformBalanceMapper;
     @Autowired
     private ContractMapper contractMapper;
+    @Autowired
+    private CacheManager cacheManager;
+
+    @Value("${system.cache.maxElementNumber}")
+    private Long maxElementNumber;
 
     @Override
     public boolean insertBlock(Block block) {
@@ -36,8 +46,17 @@ public class BlockServiceImpl implements BlockService {
 
     @Override
     public PageInfo<Block> getBlockByPage(Integer page, Integer pageSize) {
-        if (page * pageSize > 10000) {
+        if (page * pageSize < maxElementNumber) {
+            Cache cache = cacheManager.getCache("BlockServerCache");
+            List<Block> blockCacheList = (List<Block>) cache.get("block").get();
+            Long totalBlockCount = (Long) cache.get("totalBlockCount").get();
 
+            PageHelper.startPage(page, pageSize);
+            List<Block> returnList = blockCacheList.subList((page - 1) * pageSize, page * pageSize);
+            PageInfo<Block> blockPageInfo = new PageInfo<>(returnList);
+            blockPageInfo.setTotal(totalBlockCount);
+            blockPageInfo.setNextPage(page + 1);
+            return blockPageInfo;
         }
 
         PageHelper.startPage(page, pageSize);

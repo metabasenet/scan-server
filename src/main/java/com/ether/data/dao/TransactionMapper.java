@@ -1,6 +1,7 @@
 package com.ether.data.dao;
 
 import com.ether.data.entity.Transaction;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -62,13 +63,15 @@ public interface TransactionMapper {
      */
     int updateByPrimaryKey(Transaction record);
 
+    Long selectAllTransactionCount();
+
     List<Map> selectAllTransaction();
 
     Map selectTransactionByHash(String hash);
 
-    Map selectTransactionByBlockHash(String blockHash);
+    List<Map> selectTransactionByBlockHash(String blockHash);
 
     List<Map> selectTransactionByAddress(String address);
 
-    List<Transaction> selectAll();
+    List<Map> selectTransactionCacheInfo(@Param("maxElementNumber") Long maxElementNumber);
 }

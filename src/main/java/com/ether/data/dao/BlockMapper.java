@@ -56,9 +56,17 @@ public interface BlockMapper {
      */
     int updateByPrimaryKey(Block record);
 
+    Long selectAllCount();
+
     List<Block> selectAll();
 
     Block selectByHashOrNumber(@Param("number") BigDecimal number, @Param("hash") String hash);
 
     List<Map> lastedTranscationCount();
+
+    List<Block> selectBlockCacheInfo(@Param("maxElementNumber") Long maxElementNumber);
+
+    List<Block> selectBlockCacheInfoByFixedFreq();
+
+    List<Block> selectAllTest1();
 }

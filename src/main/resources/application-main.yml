@@ -55,6 +55,9 @@ system:
   task:
     transactionCountPerDay: 59 59 11 * * ?
     lastedTransactionInfo: 1 1/5 * * * ?
+  cache:
+    updateFreq: 1/10 * * * * ?
+    maxElementNumber: 10000
 logging:
   level:
     com.data.manger.dao: info

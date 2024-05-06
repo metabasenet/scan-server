@@ -1,12 +1,13 @@
 package com.ether.data.service.impl;
 
 import com.ether.data.dao.*;
-import com.ether.data.entity.Transaction;
+import com.ether.data.entity.Block;
 import com.ether.data.entity.TransactionPlatform;
 import com.ether.data.service.TransactionService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,24 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private CacheManager cacheManager;
 
+    @Value("${system.cache.maxElementNumber}")
+    private Long maxElementNumber;
+
     @Override
     public PageInfo<Map> getTransactionByPage(Integer page, Integer pageSize) {
+        if (page * pageSize < maxElementNumber) {
+            Cache cache = cacheManager.getCache("BlockServerCache");
+            List<Map> blockCacheList = (List<Map>) cache.get("transaction").get();
+            Long totalTransactionCount = (Long) cache.get("totalTransactionCount").get();
+
+            PageHelper.startPage(page, pageSize);
+            List<Map> returnList = blockCacheList.subList((page - 1) * pageSize, page * pageSize);
+            PageInfo<Map> blockPageInfo = new PageInfo<>(returnList);
+            blockPageInfo.setTotal(totalTransactionCount);
+            blockPageInfo.setNextPage(page + 1);
+            return blockPageInfo;
+        }
+
         PageHelper.startPage(page, pageSize);
         List<Map> list = transactionMapper.selectAllTransaction();
         return new PageInfo<>(list);
@@ -43,7 +60,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Map getTransactionByBlockHash(String blockHash) {
+    public List<Map> getTransactionByBlockHash(String blockHash) {
         return transactionMapper.selectTransactionByBlockHash(blockHash);
     }
 
@@ -68,26 +85,14 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Map> transcationCountInfo() {
-        return transactionCountPerDayMapper.transcationCountInfo();
+    public List<TransactionPlatform> getPlatformTransactionByAddress(String address) {
+        List<TransactionPlatform> list = transactionPlatformMapper.selectByAddress(address);
+        return list;
     }
 
     @Override
-    public PageInfo<Transaction> getTransactionByPage1(Integer page, Integer pageSize) {
-
-
-        List<Transaction> transactionList = transactionMapper.selectAll();
-        Cache transaction = cacheManager.getCache("Transaction");
-        for (int i = 0; i < transactionList.size(); i++) {
-            transaction.put(transactionList.get(i).getHash(), transactionList.get(i));
-        }
-
-
-//        Cache lastedTransactionCount = cacheManager.getCache("transaction");
-//        lastedTransactionCount.put(tx.getHash(), tx);
-//        PageHelper.startPage(page, pageSize);
-//        List<Transaction> list = (List<Transaction>) cacheManager.getCache("yourCache");
-        return new PageInfo<>(null);
+    public List<Map> transcationCountInfo() {
+        return transactionCountPerDayMapper.transcationCountInfo();
     }
 
 

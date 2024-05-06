@@ -29,6 +29,7 @@ public class TransactionController {
 
     @GetMapping("/page")
     public JSONObject pageTransaction(Integer page, Integer pageSize) {
+
         PageInfo<Map> pageInfo = transactionServiceImpl.getTransactionByPage(page, pageSize);
         return ResultUtils.successResult(pageInfo);
     }
@@ -41,8 +42,8 @@ public class TransactionController {
 
     @GetMapping("/getByBlockHash")
     public JSONObject getByBlockHash(String blockHash) {
-        Map map = transactionServiceImpl.getTransactionByBlockHash(blockHash);
-        return ResultUtils.successResult(map);
+        List<Map> mapList = transactionServiceImpl.getTransactionByBlockHash(blockHash);
+        return ResultUtils.successResult(mapList);
     }
 
     @GetMapping("/getByAddress")
@@ -60,6 +61,12 @@ public class TransactionController {
     @GetMapping("/getPlatformTransactionInfo")
     public JSONObject getPlatformTransactionInfo(String transactionHash) {
         List<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionInfo(transactionHash);
+        return ResultUtils.successResult(mapList);
+    }
+
+    @GetMapping("/getPlatformTransactionByAddress")
+    public JSONObject getPlatformTransactionByAddress(String address) {
+        List<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionByAddress(address);
         return ResultUtils.successResult(mapList);
     }
 

@@ -364,6 +364,14 @@
         where hash = #{hash,jdbcType=VARCHAR}
     </update>
 
+    <select id="selectAllTransactionCount" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM `transaction` A
+                 LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
+                 LEFT JOIN block C ON A.blockHash = C.hash
+                 LEFT JOIN method_hash E ON A.methodHash = E.`hash`
+    </select>
+
     <!--    where A.type = 0-->
     <select id="selectAllTransaction" resultType="java.util.Map">
         SELECT A.`hash`,
@@ -484,8 +492,32 @@
         order by A.blockNumber desc
     </select>
 
-    <select id="selectAll" resultMap="ResultMapWithBLOBs">
-        select *
-        from transaction limit 50
+    <select id="selectTransactionCacheInfo" resultType="java.util.Map">
+        SELECT A.`hash`,
+               A.blockHash,
+               A.blockNumber,
+               A.`from`,
+               A.`to`,
+               A.`value`,
+               A.gasPrice,
+               A.gasLimit,
+               A.maxPriorityFeePerGas,
+               A.maxFeePerGas,
+               A.nonce,
+               A.`data`,
+               B.transactionIndex,
+               B.gasUsed,
+               B.contractAddress,
+               B.cumulativeGasUsed,
+               B.effectiveGasPrice,
+               B.`status`,
+               C.timestamp,
+               A.methodHash,
+               SUBSTRING_INDEX(E.method,'(',1) as method
+        FROM `transaction` A
+                 LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
+                 LEFT JOIN block C ON A.blockHash = C.hash
+                 LEFT JOIN method_hash E ON A.methodHash = E.`hash`
+        ORDER BY A.blockNumber DESC limit ${maxElementNumber}
     </select>
 </mapper>

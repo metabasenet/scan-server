@@ -55,4 +55,6 @@ public interface TransactionPlatformMapper {
     int updateByPrimaryKey(TransactionPlatform record);
 
     List<TransactionPlatform> selectByHash(String transactionTash);
+
+    List<TransactionPlatform> selectByAddress(String address);
 }

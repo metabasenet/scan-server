@@ -1,6 +1,5 @@
 package com.ether.data.service;
 
-import com.ether.data.entity.Transaction;
 import com.ether.data.entity.TransactionPlatform;
 import com.github.pagehelper.PageInfo;
 
@@ -12,7 +11,7 @@ public interface TransactionService {
 
     Map getTransactionByHash(String hash);
 
-    Map getTransactionByBlockHash(String blockHash);
+    List<Map> getTransactionByBlockHash(String blockHash);
 
     PageInfo<Map> getTransactionByAddress(String address, Integer page, Integer pageSize);
 
@@ -20,7 +19,7 @@ public interface TransactionService {
 
     List<TransactionPlatform> getPlatformTransactionInfo(String transactionHash);
 
-    List<Map> transcationCountInfo();
+    List<TransactionPlatform> getPlatformTransactionByAddress(String address);
 
-    PageInfo<Transaction> getTransactionByPage1(Integer page, Integer pageSize);
+    List<Map> transcationCountInfo();
 }

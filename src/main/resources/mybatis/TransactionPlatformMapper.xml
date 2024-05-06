@@ -150,4 +150,14 @@
         where transactionHash = #{transactionHash,jdbcType=VARCHAR}
         order by `index`
     </select>
+
+
+    <select id="selectByAddress" parameterType="com.ether.data.entity.TransactionPlatformKey"
+            resultMap="BaseResultMap">
+        select *
+        from transaction_platform
+        where `from` = #{address,jdbcType=VARCHAR}
+           or `to` = #{address,jdbcType=VARCHAR}
+        order by `index`
+    </select>
 </mapper>
