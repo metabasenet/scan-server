@@ -19,7 +19,7 @@ public interface TransactionService {
 
     List<TransactionPlatform> getPlatformTransactionInfo(String transactionHash);
 
-    List<TransactionPlatform> getPlatformTransactionByAddress(String address);
+    PageInfo<TransactionPlatform> getPlatformTransactionByAddress(String address, Integer page, Integer pageSize);
 
     List<Map> transcationCountInfo();
 }

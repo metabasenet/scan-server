@@ -85,9 +85,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionPlatform> getPlatformTransactionByAddress(String address) {
+    public PageInfo<TransactionPlatform> getPlatformTransactionByAddress(String address, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
         List<TransactionPlatform> list = transactionPlatformMapper.selectByAddress(address);
-        return list;
+        return new PageInfo<>(list);
     }
 
     @Override

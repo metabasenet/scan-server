@@ -158,6 +158,6 @@
         from transaction_platform
         where `from` = #{address,jdbcType=VARCHAR}
            or `to` = #{address,jdbcType=VARCHAR}
-        order by `index`
+        order by utc desc
     </select>
 </mapper>

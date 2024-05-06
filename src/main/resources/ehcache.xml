@@ -1,7 +1,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
 
-    <diskStore path="F:\IDEAWork\scan-server/ehcache"/>
+    <diskStore path="/tmp/ehcache"/>
     <!--    <defaultCache-->
     <!--            maxElementsInMemory="10"-->
     <!--            overflowToDisk="false"-->
@@ -15,12 +15,12 @@
     <!--    </defaultCache>-->
 
     <cache name="BlockServerCache"
-           maxElementsInMemory="5"
+           maxElementsInMemory="100"
            overflowToDisk="false"
            eternal="true"
            timeToIdleSeconds="120"
            timeToLiveSeconds="120"
-           maxElementsOnDisk="1"
+           maxElementsOnDisk="100"
            diskExpiryThreadIntervalSeconds="120"
            memoryStoreEvictionPolicy="FIFO">
         <persistence strategy="localTempSwap"/>

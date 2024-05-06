@@ -42,7 +42,7 @@ public class EhcacheServiceImpl {
         List<Map> transactionList = transactionMapper.selectTransactionCacheInfo(maxElementNumber);
         cache.put("transaction", transactionList);
         Long transactionCount = transactionMapper.selectAllTransactionCount();
-        cache.put("transactionCount", transactionCount);
+        cache.put("totalTransactionCount", transactionCount);
     }
 
     @Scheduled(cron = "${system.cache.updateFreq}")

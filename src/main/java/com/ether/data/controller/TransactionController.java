@@ -65,21 +65,8 @@ public class TransactionController {
     }
 
     @GetMapping("/getPlatformTransactionByAddress")
-    public JSONObject getPlatformTransactionByAddress(String address) {
-        List<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionByAddress(address);
+    public JSONObject getPlatformTransactionByAddress(String address, Integer page, Integer pageSize) {
+        PageInfo<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionByAddress(address, page, pageSize);
         return ResultUtils.successResult(mapList);
     }
-
-//    @GetMapping("/page1")
-//    public JSONObject pageBlock(Integer page, Integer pageSize) {
-//        PageInfo<Transaction> pageInfo = transactionServiceImpl.getTransactionByPage1(page, pageSize);
-//        return ResultUtils.successResult(pageInfo);
-//    }
-//
-//    @GetMapping("/page2")
-//    public JSONObject pageBlock2(Integer page, Integer pageSize) {
-//        Cache.ValueWrapper res = cacheManager.getCache("Transaction").get("0x00a91dbf1be6f22ffcf01c690960da8d8183eb8e1f8a279c59c2d932f3aac3ec");
-//
-//        return ResultUtils.successResult(res.get());
-//    }
 }
