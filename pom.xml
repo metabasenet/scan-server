@@ -132,12 +132,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!--项目的启动类-->
                     <mainClass>com.ether.data.EtherApplication</mainClass>
-                    <!--解决windows命令行窗口中文乱码-->
                     <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
                     <layout>ZIP</layout>
-                    <!--配置需要打包进项目的jar-->
                     <includes>
                         <include>
                             <groupId>non-exists</groupId>
@@ -154,7 +151,6 @@
                 </executions>
             </plugin>
 
-            <!--此插件用于将依赖包抽出-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>

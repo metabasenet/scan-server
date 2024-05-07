@@ -6,7 +6,7 @@ spring:
     chain:
       compressed: true
       cache: false
-    static-locations: classpath:/static/,file:D:/biaoZhuData/upload/,classpath:/static/dcv/
+    static-locations: classpath:/static/
   servlet:
     multipart:
       enabled: true

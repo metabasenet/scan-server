@@ -67,6 +67,4 @@ public interface BlockMapper {
     List<Block> selectBlockCacheInfo(@Param("maxElementNumber") Long maxElementNumber);
 
     List<Block> selectBlockCacheInfoByFixedFreq();
-
-    List<Block> selectAllTest1();
 }
