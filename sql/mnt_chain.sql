@@ -11,7 +11,7 @@
  Target Server Version : 80036
  File Encoding         : 65001
 
- Date: 07/05/2024 08:57:38
+ Date: 08/05/2024 11:26:35
 */
 
 SET NAMES utf8mb4;
@@ -143,6 +143,24 @@ CREATE TABLE `platform_balance`  (
   `balance` decimal(65, 0) NULL DEFAULT NULL,
   `updateTime` datetime(6) NULL DEFAULT NULL,
   PRIMARY KEY (`address`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for platform_internal_transaction
+-- ----------------------------
+DROP TABLE IF EXISTS `platform_internal_transaction`;
+CREATE TABLE `platform_internal_transaction`  (
+  `transactionHash` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `blockHash` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `contractAddress` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `index` int(0) NOT NULL,
+  `blockNumber` bigint(0) NULL DEFAULT NULL,
+  `methodHash` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `from` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `to` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`transactionHash`, `blockHash`, `contractAddress`, `index`) USING BTREE,
+  INDEX `methodHash`(`methodHash`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

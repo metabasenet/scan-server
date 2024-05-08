@@ -18,7 +18,7 @@ server:
 
 spring:
   profiles:
-    active: main
+    active: test
   mvc:
     async:
       request-timeout: 200000

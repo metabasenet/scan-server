@@ -69,4 +69,16 @@ public class TransactionController {
         PageInfo<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionByAddress(address, page, pageSize);
         return ResultUtils.successResult(mapList);
     }
+
+    @GetMapping("/getInternalTransactionInfo")
+    public JSONObject getInternalTransactionInfo(String transactionHash) {
+        List<Map> mapList = transactionServiceImpl.getInternalTransactionInfo(transactionHash);
+        return ResultUtils.successResult(mapList);
+    }
+
+    @GetMapping("/getInternalTransactionByAddress")
+    public JSONObject getInternalTransactionByAddress(String address, Integer page, Integer pageSize) {
+        PageInfo<Map> mapList = transactionServiceImpl.getInternalTransactionByAddress(address, page, pageSize);
+        return ResultUtils.successResult(mapList);
+    }
 }

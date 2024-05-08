@@ -96,6 +96,17 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionCountPerDayMapper.transcationCountInfo();
     }
 
+    @Override
+    public List<Map> getInternalTransactionInfo(String transactionHash) {
+        List<Map> list = transactionErc20Mapper.selectInternalTransactionByHash(transactionHash);
+        return list;
+    }
 
+    @Override
+    public PageInfo<Map> getInternalTransactionByAddress(String address, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<Map> list = transactionErc20Mapper.selectInternalTransactionByAddress(address);
+        return new PageInfo<>(list);
+    }
 }
 

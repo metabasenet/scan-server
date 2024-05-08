@@ -2,6 +2,7 @@ package com.ether.data.dao;
 
 import com.ether.data.entity.TransactionErc20;
 import com.ether.data.entity.TransactionErc20Key;
+import com.ether.data.entity.TransactionPlatform;
 
 import java.util.List;
 import java.util.Map;
@@ -64,5 +65,11 @@ public interface TransactionErc20Mapper {
     List<Map> selectByTransactionHash(String transactionhash);
 
     Long getContractTransactionCountByAddress(String contractaddress);
+
+
+    /****/
+    List<Map> selectInternalTransactionByHash(String transactionTash);
+
+    List<Map> selectInternalTransactionByAddress(String address);
 
 }

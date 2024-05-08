@@ -244,26 +244,25 @@
         FROM (SELECT * FROM transaction_erc20 WHERE SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')) A
                  LEFT JOIN block B ON A.blockHash = B.`hash`
                  LEFT JOIN contract C ON A.contractAddress = C.contractAddress
-                 LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10)  = D.`hash`
+                 LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10) = D.`hash`
         ORDER BY A.blockNumber DESC,
                  A.transactionHash ASC,
                  A.index ASC
     </select>
 
     <select id="selectByTransactionHash" parameterType="java.lang.String" resultType="java.util.Map">
-        select
-            A.transactionHash,
-            A.blockHash,
-            A.contractAddress,
-            A.`index`,
-            A.methodHash,
-            A.blockNumber,
-            A.`from`,
-            A.`to`,
-            A.`value`,
-            D.method
+        select A.transactionHash,
+               A.blockHash,
+               A.contractAddress,
+               A.`index`,
+               A.methodHash,
+               A.blockNumber,
+               A.`from`,
+               A.`to`,
+               A.`value`,
+               D.method
         from transaction_erc20 A
-        LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10)  = D.`hash`
+                 LEFT JOIN method_hash D ON SUBSTRING(A.methodHash, 1, 10) = D.`hash`
         where transactionHash = #{transactionhash,jdbcType=VARCHAR}
         ORDER BY `index`
     </select>
@@ -273,5 +272,24 @@
         from transaction_erc20
         where contractAddress = #{contractaddress,jdbcType=VARCHAR}
           and SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')
+    </select>
+
+
+    <select id="selectInternalTransactionByHash" parameterType="java.lang.String" resultType="java.util.Map">
+        select A.*, B.`timestamp`
+        from platform_internal_transaction A
+                 left join block B on A.blockHash = B.`hash`
+        where A.transactionHash = #{transactionHash,jdbcType=VARCHAR}
+        order by A.`index`
+    </select>
+
+
+    <select id="selectInternalTransactionByAddress" parameterType="java.lang.String" resultType="java.util.Map">
+        select A.*, B.`timestamp`
+        from platform_internal_transaction A
+                 left join block B on A.blockHash = B.`hash`
+        where A.`from` = #{address,jdbcType=VARCHAR}
+           or A.`to` = #{address,jdbcType=VARCHAR}
+        order by B.utc desc
     </select>
 </mapper>

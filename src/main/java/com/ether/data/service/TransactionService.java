@@ -22,4 +22,8 @@ public interface TransactionService {
     PageInfo<TransactionPlatform> getPlatformTransactionByAddress(String address, Integer page, Integer pageSize);
 
     List<Map> transcationCountInfo();
+
+    List<Map> getInternalTransactionInfo(String transactionHash);
+
+    PageInfo<Map> getInternalTransactionByAddress(String address, Integer page, Integer pageSize);
 }
