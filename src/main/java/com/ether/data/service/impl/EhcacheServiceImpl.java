@@ -72,7 +72,7 @@ public class EhcacheServiceImpl {
         List<Map> transactionCacheList = (List<Map>) cache.get("transaction").get();
         Integer transactionSize = transactionIncrementList.size();
         for (int i = transactionSize - 1; i >= 0; i--) {
-            String transactionHash = (String) transactionCacheList.get(i).get("hash");
+            String transactionHash = (String) transactionIncrementList.get(i).get("hash");
             Long count = transactionCacheList.stream().filter(f -> f.get("hash").equals(transactionHash)).count();
             if (count <= 0) {
                 transactionCacheList.add(0, transactionIncrementList.get(i));
