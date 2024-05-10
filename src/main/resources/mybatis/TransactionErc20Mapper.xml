@@ -276,7 +276,16 @@
 
 
     <select id="selectInternalTransactionByHash" parameterType="java.lang.String" resultType="java.util.Map">
-        select A.*, B.`timestamp`
+        select A.transactionHash as 'transactionhash',
+                A.blockHash,
+               A.contractAddress,
+               A.`index`,
+               A.methodHash,
+               A.blockNumber,
+               A.`from`,
+               A.`to`,
+               A.`value`,
+               B.`timestamp` as  'utc'
         from platform_internal_transaction A
                  left join block B on A.blockHash = B.`hash`
         where A.transactionHash = #{transactionHash,jdbcType=VARCHAR}
@@ -285,11 +294,20 @@
 
 
     <select id="selectInternalTransactionByAddress" parameterType="java.lang.String" resultType="java.util.Map">
-        select A.*, B.`timestamp`
+        select A.transactionHash as 'transactionhash',
+               A.blockHash,
+               A.contractAddress,
+               A.`index`,
+               A.methodHash,
+               A.blockNumber,
+               A.`from`,
+               A.`to`,
+               A.`value`,
+               B.`timestamp` as  'utc'
         from platform_internal_transaction A
                  left join block B on A.blockHash = B.`hash`
         where A.`from` = #{address,jdbcType=VARCHAR}
            or A.`to` = #{address,jdbcType=VARCHAR}
-        order by B.utc desc
+        order by B.`timestamp` desc
     </select>
 </mapper>

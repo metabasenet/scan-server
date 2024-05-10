@@ -43,10 +43,10 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="mnt_price" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="swap_pairs" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-<!--        <table tableName="lasted_transaction_fee" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <table tableName="swap_tx" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
     </context>
 </generatorConfiguration>

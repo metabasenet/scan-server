@@ -31,6 +31,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     public Map getContractByAddress(String address) {
+        PageHelper.clearPage();
         return contractMapper.selectByContractAddress(address);
     }
 
