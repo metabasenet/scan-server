@@ -1,6 +1,7 @@
 package com.ether.data.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ether.data.entity.SwapPairs;
 import com.ether.data.service.SwapService;
 import com.ether.data.util.ResultUtils;
 import com.github.pagehelper.PageInfo;
@@ -18,8 +19,14 @@ public class SwapController {
     private SwapService swapServiceImpl;
 
     @GetMapping("/getPrice")
-    public JSONObject getInternalTransactionByAddress(String address, Integer type, Integer page, Integer pageSize) {
+    public JSONObject getPrice(String address, Integer type, Integer page, Integer pageSize) {
         PageInfo<Map> mapList = swapServiceImpl.getPairPrice(address, type, page, pageSize);
+        return ResultUtils.successResult(mapList);
+    }
+
+    @GetMapping("/getPairs")
+    public JSONObject getPairs(Integer page, Integer pageSize) {
+        PageInfo<SwapPairs> mapList = swapServiceImpl.getPairs(page, pageSize);
         return ResultUtils.successResult(mapList);
     }
 }
