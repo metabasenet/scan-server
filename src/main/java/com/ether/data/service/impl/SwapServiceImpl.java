@@ -1,7 +1,9 @@
 package com.ether.data.service.impl;
 
+import com.ether.data.dao.ContractMapper;
 import com.ether.data.dao.SwapPairsMapper;
 import com.ether.data.dao.SwapTxMapper;
+import com.ether.data.entity.Contract;
 import com.ether.data.entity.SwapPairs;
 import com.ether.data.service.SwapService;
 import com.github.pagehelper.PageHelper;
@@ -20,6 +22,9 @@ public class SwapServiceImpl implements SwapService {
     @Autowired
     private SwapPairsMapper swapPairsMapper;
 
+    @Autowired
+    private ContractMapper contractMapper;
+
     @Override
     public PageInfo<Map> getPairPrice(String pairAddress, Integer type,Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
@@ -32,5 +37,11 @@ public class SwapServiceImpl implements SwapService {
         PageHelper.startPage(page, pageSize);
         List<SwapPairs> mapList= swapPairsMapper.selectAll();
         return new PageInfo<>(mapList);
+    }
+
+    @Override
+    public List<Contract> getTokens() {
+        List<Contract> contractList= contractMapper.selectAllToken();
+        return  contractList;
     }
 }

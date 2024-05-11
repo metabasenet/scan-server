@@ -35,13 +35,13 @@ public class ContractVerfityController {
 
     @GetMapping("/getByContractAddress")
     public JSONObject getByContractAddress(String contractAddress) {
-        Map contract = contractServiceImpl.getContractByAddress(contractAddress);
-        if (contract == null) {
-            return ResultUtils.errorResult("contract is not found");
-        } else {
-            ContractVerfity contractVerfity = contractVerfityServiceImpl.getCompileInfo(contractAddress);
-            return ResultUtils.successResult(contractVerfity);
-        }
+//        Map contract = contractServiceImpl.getContractByAddress(contractAddress);
+//        if (contract == null) {
+//            return ResultUtils.errorResult("contract is not found");
+//        } else {
+        ContractVerfity contractVerfity = contractVerfityServiceImpl.getCompileInfo(contractAddress);
+        return ResultUtils.successResult(contractVerfity);
+//        }
     }
 
     @PostMapping("/updateContractCompileInfo")

@@ -1,6 +1,7 @@
 package com.ether.data.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ether.data.entity.Contract;
 import com.ether.data.entity.SwapPairs;
 import com.ether.data.service.SwapService;
 import com.ether.data.util.ResultUtils;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,5 +30,11 @@ public class SwapController {
     public JSONObject getPairs(Integer page, Integer pageSize) {
         PageInfo<SwapPairs> mapList = swapServiceImpl.getPairs(page, pageSize);
         return ResultUtils.successResult(mapList);
+    }
+
+    @GetMapping("/getTokens")
+    public JSONObject getTokens() {
+        List<Contract> contractList = swapServiceImpl.getTokens();
+        return ResultUtils.successResult(contractList);
     }
 }

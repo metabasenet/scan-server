@@ -65,4 +65,6 @@ public interface ContractMapper {
     Map selectByContractAddress(String contractAddress);
 
     List<Map> selectAll();
+
+    List<Contract> selectAllToken();
 }
