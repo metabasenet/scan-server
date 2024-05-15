@@ -294,9 +294,5 @@
     <select id="selectAllToken" resultType="com.ether.data.entity.Contract">
         SELECT *
         FROM `contract`
-        where blockNumber > 50000
-           or (contractAddress in
-               ('0x6bb636db36a5f04be8faff375852862939b84442', '0x70de61b87c6bec577c30b8a37810c652ead68ea5',
-                '0xaf5efec32837e3a609e7272c0a2fe19652cf3e56'))
     </select>
 </mapper>

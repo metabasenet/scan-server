@@ -117,7 +117,7 @@ public class ContractVerfityServiceImpl implements ContractVerfityService {
                         methodHash.setHash("0x" + hashMapping.split(":")[0]);
                         methodHash.setType(1);
                     } else {
-                        methodHash.setHash("0x" + hashMapping.split(":")[0].substring(0,7));
+                        methodHash.setHash("0x" + hashMapping.split(":")[0].substring(0,8));
                         methodHash.setType(2);
                     }
                     methodHashMapper.insert(methodHash);

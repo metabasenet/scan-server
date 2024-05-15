@@ -93,13 +93,20 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Map> transcationCountInfo() {
-        return transactionCountPerDayMapper.transcationCountInfo();
+        List<Map> mapList= transactionCountPerDayMapper.transcationCountInfo();
+        return mapList;
     }
 
     @Override
     public List<Map> getInternalTransactionInfo(String transactionHash) {
-        List<Map> list = transactionErc20Mapper.selectInternalTransactionByHash(transactionHash);
-        return list;
+        List<Map> mapList = transactionErc20Mapper.selectInternalTransactionByHash(transactionHash);
+        for (Map<String, String> map : mapList) {
+            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
+            map.put("from", fromAddress);
+            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
+            map.put("to", toAddress);
+        }
+        return mapList;
     }
 
     @Override
