@@ -21,8 +21,8 @@ public class SwapController {
     private SwapService swapServiceImpl;
 
     @GetMapping("/getPrice")
-    public JSONObject getPrice(String address, Integer type, Integer page, Integer pageSize) {
-        PageInfo<Map> mapList = swapServiceImpl.getPairPrice(address, type, page, pageSize);
+    public JSONObject getPrice(String tokenAddress1, String tokenAddress2, Integer type, Integer page, Integer pageSize) {
+        PageInfo<Map> mapList = swapServiceImpl.getPairPrice(tokenAddress1, tokenAddress2, type, page, pageSize);
         return ResultUtils.successResult(mapList);
     }
 

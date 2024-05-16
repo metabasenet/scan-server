@@ -1,6 +1,7 @@
 package com.ether.data.dao;
 
 import com.ether.data.entity.SwapPairs;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -54,4 +55,6 @@ public interface SwapPairsMapper {
     int updateByPrimaryKey(SwapPairs record);
 
     List<SwapPairs> selectAll();
+
+    SwapPairs selectPairByTokenAddress(@Param("token0Address") String token0Address,@Param("token1Address") String token1Address);
 }

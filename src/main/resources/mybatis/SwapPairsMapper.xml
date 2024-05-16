@@ -206,4 +206,11 @@
         select *
         from swap_pairs
     </select>
+
+    <select id="selectPairByTokenAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from swap_pairs
+        where token0_address = #{token0Address,jdbcType=VARCHAR}
+          and token1_address = #{token1Address,jdbcType=VARCHAR}
+    </select>
 </mapper>

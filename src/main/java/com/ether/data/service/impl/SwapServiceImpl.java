@@ -26,22 +26,33 @@ public class SwapServiceImpl implements SwapService {
     private ContractMapper contractMapper;
 
     @Override
-    public PageInfo<Map> getPairPrice(String pairAddress, Integer type,Integer page, Integer pageSize) {
-        PageHelper.startPage(page, pageSize);
-        List<Map> mapList= swapTxMapper.getPairPrice(pairAddress, type);
-        return new PageInfo<>(mapList);
+    public PageInfo<Map> getPairPrice(String tokenAddress1, String tokenAddress2, Integer type, Integer page, Integer pageSize) {
+        SwapPairs swapPairs01 = swapPairsMapper.selectPairByTokenAddress(tokenAddress1, tokenAddress2);
+        if (swapPairs01 != null) {
+            PageHelper.startPage(page, pageSize);
+            List<Map> mapList = swapTxMapper.getPairPrice01(swapPairs01.getPairAddress(), type);
+            return new PageInfo<>(mapList);
+        }
+        SwapPairs swapPairs10 = swapPairsMapper.selectPairByTokenAddress(tokenAddress2, tokenAddress1);
+        if (swapPairs10 != null) {
+            PageHelper.startPage(page, pageSize);
+            List<Map> mapList = swapTxMapper.getPairPrice10(swapPairs10.getPairAddress(), type);
+            return new PageInfo<>(mapList);
+        }
+        return new PageInfo<>(null);
     }
 
     @Override
     public PageInfo<SwapPairs> getPairs(Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
-        List<SwapPairs> mapList= swapPairsMapper.selectAll();
+        List<SwapPairs> mapList = swapPairsMapper.selectAll();
         return new PageInfo<>(mapList);
     }
 
+
     @Override
     public List<Contract> getTokens() {
-        List<Contract> contractList= contractMapper.selectAllToken();
-        return  contractList;
+        List<Contract> contractList = contractMapper.selectAllToken();
+        return contractList;
     }
 }

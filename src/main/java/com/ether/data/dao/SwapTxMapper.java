@@ -56,5 +56,6 @@ public interface SwapTxMapper {
      */
     int updateByPrimaryKey(SwapTx record);
 
-    List<Map> getPairPrice(@Param("pairAddress") String pairAddress, @Param("type") Integer type);
+    List<Map> getPairPrice01(@Param("pairAddress") String pairAddress, @Param("type") Integer type);
+    List<Map> getPairPrice10(@Param("pairAddress") String pairAddress, @Param("type") Integer type);
 }
