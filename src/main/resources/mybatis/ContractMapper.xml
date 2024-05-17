@@ -294,5 +294,6 @@
     <select id="selectAllToken" resultType="com.ether.data.entity.Contract">
         SELECT *
         FROM `contract`
+        where status = '0'
     </select>
 </mapper>

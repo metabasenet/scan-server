@@ -2,6 +2,7 @@ package com.ether.data.service.impl;
 
 import com.ether.data.dao.*;
 import com.ether.data.entity.Block;
+import com.ether.data.entity.MethodHash;
 import com.ether.data.entity.TransactionPlatform;
 import com.ether.data.service.TransactionService;
 import com.github.pagehelper.PageHelper;
@@ -22,11 +23,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private TransactionErc20Mapper transactionErc20Mapper;
     @Autowired
-    private TransactionReceiptMapper transactionReceiptMapper;
-    @Autowired
     private TransactionCountPerDayMapper transactionCountPerDayMapper;
     @Autowired
     private TransactionPlatformMapper transactionPlatformMapper;
+    @Autowired
+    private MethodHashMapper methodHashMapper;
 
     @Autowired
     private CacheManager cacheManager;
@@ -93,7 +94,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Map> transcationCountInfo() {
-        List<Map> mapList= transactionCountPerDayMapper.transcationCountInfo();
+        List<Map> mapList = transactionCountPerDayMapper.transcationCountInfo();
         return mapList;
     }
 
@@ -114,6 +115,11 @@ public class TransactionServiceImpl implements TransactionService {
         PageHelper.startPage(page, pageSize);
         List<Map> list = transactionErc20Mapper.selectInternalTransactionByAddress(address);
         return new PageInfo<>(list);
+    }
+
+    @Override
+    public MethodHash getMethdNameByHash(String methodHash) {
+        return methodHashMapper.selectByPrimaryKey(methodHash);
     }
 }
 

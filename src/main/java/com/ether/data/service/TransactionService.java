@@ -1,5 +1,6 @@
 package com.ether.data.service;
 
+import com.ether.data.entity.MethodHash;
 import com.ether.data.entity.TransactionPlatform;
 import com.github.pagehelper.PageInfo;
 
@@ -26,4 +27,6 @@ public interface TransactionService {
     List<Map> getInternalTransactionInfo(String transactionHash);
 
     PageInfo<Map> getInternalTransactionByAddress(String address, Integer page, Integer pageSize);
+
+   MethodHash getMethdNameByHash(String methodHash);
 }

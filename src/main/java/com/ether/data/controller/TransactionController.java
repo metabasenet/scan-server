@@ -2,6 +2,7 @@ package com.ether.data.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.ether.data.entity.MethodHash;
 import com.ether.data.entity.Transaction;
 import com.ether.data.entity.TransactionPlatform;
 import com.ether.data.service.TransactionService;
@@ -80,5 +81,11 @@ public class TransactionController {
     public JSONObject getInternalTransactionByAddress(String address, Integer page, Integer pageSize) {
         PageInfo<Map> mapList = transactionServiceImpl.getInternalTransactionByAddress(address, page, pageSize);
         return ResultUtils.successResult(mapList);
+    }
+
+    @GetMapping("/getMethdNameByHash")
+    public JSONObject getMethdNameByHash(String hash) {
+        MethodHash methodHash = transactionServiceImpl.getMethdNameByHash(hash);
+        return ResultUtils.successResult(methodHash);
     }
 }
