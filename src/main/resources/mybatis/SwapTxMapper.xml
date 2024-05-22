@@ -268,6 +268,9 @@
             DATE_FORMAT(A.time, '%Y-%m-%d') as `time`
         </if>
         <if test="type != null and type == 5">
+            DATE_FORMAT(min(A.time), '%Y-%m-%d') as `time`
+        </if>
+        <if test="type != null and type == 6">
             DATE_FORMAT(A.time, '%Y-%m') as `time`
         </if>
         FROM `swap_tx` A
@@ -285,6 +288,9 @@
             GROUP BY DATE_FORMAT(A.time, '%Y-%m-%d')
         </if>
         <if test="type != null and type == 5">
+            GROUP BY YEARWEEK(A.time)
+        </if>
+        <if test="type != null and type == 6">
             GROUP BY DATE_FORMAT(A.time, '%Y-%m')
         </if>
         ) C ORDER BY C.`time` DESC
@@ -308,6 +314,9 @@
             DATE_FORMAT(A.time, '%Y-%m-%d') as `time`
         </if>
         <if test="type != null and type == 5">
+            DATE_FORMAT(min(A.time), '%Y-%m-%d') as `time`
+        </if>
+        <if test="type != null and type == 6">
             DATE_FORMAT(A.time, '%Y-%m') as `time`
         </if>
         FROM `swap_tx` A
@@ -325,8 +334,26 @@
             GROUP BY DATE_FORMAT(A.time, '%Y-%m-%d')
         </if>
         <if test="type != null and type == 5">
+            GROUP BY YEARWEEK(A.time)
+        </if>
+        <if test="type != null and type == 6">
             GROUP BY DATE_FORMAT(A.time, '%Y-%m')
         </if>
         ) C ORDER BY C.`time` DESC
+    </select>
+
+
+    <select id="getPairPriceFlow01" parameterType="java.lang.String" resultType="java.util.Map">
+        select rate01 as 'rate',`time`
+        FROM `swap_tx`
+        WHERE pair_address = #{pairAddress,jdbcType=VARCHAR}
+        order by `time` desc
+    </select>
+
+    <select id="getPairPriceFlow10" parameterType="java.lang.String" resultType="java.util.Map">
+        select rate10 as 'rate',`time`
+        FROM `swap_tx`
+        WHERE pair_address = #{pairAddress,jdbcType=VARCHAR}
+        order by `time` desc
     </select>
 </mapper>

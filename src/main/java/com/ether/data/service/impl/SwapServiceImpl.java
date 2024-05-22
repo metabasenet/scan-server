@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,12 +32,41 @@ public class SwapServiceImpl implements SwapService {
         if (swapPairs01 != null) {
             PageHelper.startPage(page, pageSize);
             List<Map> mapList = swapTxMapper.getPairPrice01(swapPairs01.getPairAddress(), type);
+            mapList=updateOpenPrice(mapList);
             return new PageInfo<>(mapList);
         }
         SwapPairs swapPairs10 = swapPairsMapper.selectPairByTokenAddress(tokenAddress2, tokenAddress1);
         if (swapPairs10 != null) {
             PageHelper.startPage(page, pageSize);
             List<Map> mapList = swapTxMapper.getPairPrice10(swapPairs10.getPairAddress(), type);
+            mapList=updateOpenPrice(mapList);
+            return new PageInfo<>(mapList);
+        }
+        return new PageInfo<>(null);
+    }
+
+    private List<Map> updateOpenPrice(List<Map> mapList) {
+        for (int i = 0; i < mapList.size(); i++) {
+            Map map = mapList.get(i);
+            if (i + 1 < mapList.size()) {
+                map.put("first", mapList.get(i + 1).get("last"));
+            }
+        }
+        return mapList;
+    }
+
+    @Override
+    public PageInfo<Map> getPairPriceFlow(String tokenAddress1, String tokenAddress2, Integer page, Integer pageSize) {
+        SwapPairs swapPairs01 = swapPairsMapper.selectPairByTokenAddress(tokenAddress1, tokenAddress2);
+        if (swapPairs01 != null) {
+            PageHelper.startPage(page, pageSize);
+            List<Map> mapList = swapTxMapper.getPairPriceFlow01(swapPairs01.getPairAddress());
+            return new PageInfo<>(mapList);
+        }
+        SwapPairs swapPairs10 = swapPairsMapper.selectPairByTokenAddress(tokenAddress2, tokenAddress1);
+        if (swapPairs10 != null) {
+            PageHelper.startPage(page, pageSize);
+            List<Map> mapList = swapTxMapper.getPairPriceFlow01(swapPairs10.getPairAddress());
             return new PageInfo<>(mapList);
         }
         return new PageInfo<>(null);

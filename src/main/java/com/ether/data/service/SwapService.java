@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface SwapService {
-    PageInfo<Map> getPairPrice(String tokenAddress1,String tokenAddress2, Integer type,Integer page, Integer pageSize) ;
+    PageInfo<Map> getPairPrice(String tokenAddress1, String tokenAddress2, Integer type, Integer page, Integer pageSize);
+
+    PageInfo<Map> getPairPriceFlow(String tokenAddress1, String tokenAddress2, Integer page, Integer pageSize);
 
     PageInfo<SwapPairs> getPairs(Integer page, Integer pageSize);
 

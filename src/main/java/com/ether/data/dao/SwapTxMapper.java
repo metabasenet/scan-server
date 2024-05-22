@@ -58,4 +58,7 @@ public interface SwapTxMapper {
 
     List<Map> getPairPrice01(@Param("pairAddress") String pairAddress, @Param("type") Integer type);
     List<Map> getPairPrice10(@Param("pairAddress") String pairAddress, @Param("type") Integer type);
+
+    List<Map> getPairPriceFlow01(@Param("pairAddress") String pairAddress);
+    List<Map> getPairPriceFlow10(@Param("pairAddress") String pairAddress);
 }
