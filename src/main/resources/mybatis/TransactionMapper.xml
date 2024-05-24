@@ -518,6 +518,7 @@
                  LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
                  LEFT JOIN block C ON A.blockHash = C.hash
                  LEFT JOIN method_hash E ON A.methodHash = E.`hash`
-        ORDER BY A.blockNumber DESC limit ${maxElementNumber}
+        where  A.blockNumber >= ${blockNumber}
+        ORDER BY A.blockNumber DESC
     </select>
 </mapper>

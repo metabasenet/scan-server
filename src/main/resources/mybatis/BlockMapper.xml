@@ -267,7 +267,9 @@
     <select id="selectBlockCacheInfo" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from block order by number desc limit ${maxElementNumber}
+        from block
+        order by number desc
+        limit ${maxElementNumber}
     </select>
 
     <select id="selectBlockCacheInfoByFixedFreq" resultMap="BaseResultMap">

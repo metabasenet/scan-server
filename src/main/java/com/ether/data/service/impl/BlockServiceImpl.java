@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +67,12 @@ public class BlockServiceImpl implements BlockService {
     @Override
     public Block getByBlockNumber(Integer blockNumber) {
         Block block = blockMapper.selectByPrimaryKey(BigDecimal.valueOf(blockNumber));
+        List<Map> transactionList = transactionMapper.selectTransactionByBlockHash(block.getHash());
+        Long transactionGasFees = 0L;
+        for (Map map : transactionList) {
+            transactionGasFees += Long.valueOf(String.valueOf(map.get("gasUsed"))) * Long.valueOf(String.valueOf(map.get("effectiveGasPrice")));
+        }
+        block.setTransactionGasFees(transactionGasFees);
         return block;
     }
 

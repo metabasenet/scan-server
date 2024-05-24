@@ -73,5 +73,5 @@ public interface TransactionMapper {
 
     List<Map> selectTransactionByAddress(String address);
 
-    List<Map> selectTransactionCacheInfo(@Param("maxElementNumber") Long maxElementNumber);
+    List<Map> selectTransactionCacheInfo(@Param("blockNumber") Long blockNumber);
 }

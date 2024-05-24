@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class EhcacheServiceImpl {
@@ -36,12 +37,24 @@ public class EhcacheServiceImpl {
         Cache cache = cacheManager.getCache("BlockServerCache");
         List<Block> blockList = blockMapper.selectBlockCacheInfo(maxElementNumber);
         Long totalBlockCount = blockMapper.selectAllCount();
+
+        Long minBlockNumber = Long.valueOf(String.valueOf(blockList.get(blockList.size() - 1).getNumber()));
+        List<Map> transactionList = transactionMapper.selectTransactionCacheInfo(minBlockNumber);
+        Long transactionCount = transactionMapper.selectAllTransactionCount();
+
+        for (Block block : blockList) {
+            Long transactionGasFees = 0L;
+            List<Map> transactionBlockList = transactionList.stream().filter(f -> Long.valueOf(String.valueOf(f.get("blockNumber"))).equals(Long.valueOf(String.valueOf(block.getNumber())))).collect(Collectors.toList());
+            for (Map map : transactionBlockList) {
+                transactionGasFees += Long.valueOf(String.valueOf(map.get("gasUsed"))) * Long.valueOf(String.valueOf(map.get("effectiveGasPrice")));
+            }
+            block.setTransactionGasFees(transactionGasFees);
+        }
+
         cache.put("block", blockList);
         cache.put("totalBlockCount", totalBlockCount);
 
-        List<Map> transactionList = transactionMapper.selectTransactionCacheInfo(maxElementNumber);
         cache.put("transaction", transactionList);
-        Long transactionCount = transactionMapper.selectAllTransactionCount();
         cache.put("totalTransactionCount", transactionCount);
     }
 
