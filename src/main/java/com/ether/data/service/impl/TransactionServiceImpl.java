@@ -59,7 +59,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Map> getLastedTransfer(String contractAddress, String userAddress)  {
+    public List<Map> getLastedTransfer(String contractAddress, String userAddress) {
         userAddress = userAddress.replace("0x", "0x000000000000000000000000");
         List<Map> mapList = new LinkedList<>();
         if (contractAddress.startsWith("0x000000000000000000000000000000000000000")) {
