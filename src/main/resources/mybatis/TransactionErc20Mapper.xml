@@ -318,7 +318,6 @@
                  LEFT JOIN block B ON A.blockHash = B.`hash`
         where (A.from = #{address,jdbcType=VARCHAR} or A.to = #{address,jdbcType=VARCHAR})
           and A.contractAddress = #{contractaddress,jdbcType=VARCHAR}
-        and A.`value`>0
         order by A.blockNumber desc, A.transactionHash asc, A.index asc limit 40
     </select>
 </mapper>
