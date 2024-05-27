@@ -74,4 +74,6 @@ public interface TransactionMapper {
     List<Map> selectTransactionByAddress(String address);
 
     List<Map> selectTransactionCacheInfo(@Param("blockNumber") Long blockNumber);
+
+    List<Map> selectPlatformInternalRransaction(@Param("userAddress") String userAddress);
 }

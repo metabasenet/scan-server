@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +31,17 @@ public class TransactionController {
 
     @GetMapping("/page")
     public JSONObject pageTransaction(Integer page, Integer pageSize) {
-
         PageInfo<Map> pageInfo = transactionServiceImpl.getTransactionByPage(page, pageSize);
         return ResultUtils.successResult(pageInfo);
     }
+
+
+    @GetMapping("/getLastedTransfer/{contractAddress}/{userAddress}")
+    public JSONObject getLastedTransfer(@PathVariable String contractAddress, @PathVariable String userAddress) {
+        List<Map> pageInfo = transactionServiceImpl.getLastedTransfer(contractAddress, userAddress);
+        return ResultUtils.successResult(pageInfo);
+    }
+
 
     @GetMapping("/getByHash")
     public JSONObject getByHash(String hash) {

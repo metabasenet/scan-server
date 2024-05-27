@@ -276,8 +276,7 @@
 
 
     <select id="selectInternalTransactionByHash" parameterType="java.lang.String" resultType="java.util.Map">
-        select A.transactionHash as 'transactionhash',
-                A.blockHash,
+        select A.transactionHash as 'transactionhash', A.blockHash,
                A.contractAddress,
                A.`index`,
                A.methodHash,
@@ -294,8 +293,7 @@
 
 
     <select id="selectInternalTransactionByAddress" parameterType="java.lang.String" resultType="java.util.Map">
-        select A.transactionHash as 'transactionhash',
-               A.blockHash,
+        select A.transactionHash as 'transactionhash', A.blockHash,
                A.contractAddress,
                A.`index`,
                A.methodHash,
@@ -309,5 +307,17 @@
         where A.`from` = #{address,jdbcType=VARCHAR}
            or A.`to` = #{address,jdbcType=VARCHAR}
         order by B.`timestamp` desc
+    </select>
+
+    <select id="getContractTransaction" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT A.transactionHash as 'hash', A.`from`,
+               A.`to`,
+               A.`value`,
+               B.`timestamp`
+        FROM (SELECT * FROM transaction_erc20 WHERE SUBSTRING(methodHash, 1, 10) = '0xddf252ad') A
+                 LEFT JOIN block B ON A.blockHash = B.`hash`
+        where (A.from = #{address,jdbcType=VARCHAR} or A.to = #{address,jdbcType=VARCHAR})
+          and A.contractAddress = #{contractaddress,jdbcType=VARCHAR}
+        order by A.blockNumber desc, A.transactionHash asc, A.index asc limit 40
     </select>
 </mapper>

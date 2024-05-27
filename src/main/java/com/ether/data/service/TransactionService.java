@@ -3,12 +3,15 @@ package com.ether.data.service;
 import com.ether.data.entity.MethodHash;
 import com.ether.data.entity.TransactionPlatform;
 import com.github.pagehelper.PageInfo;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
 
 public interface TransactionService {
     PageInfo<Map> getTransactionByPage(Integer page, Integer pageSize);
+
+    List<Map> getLastedTransfer(String contractAddress, String userAddress) ;
 
     Map getTransactionByHash(String hash);
 

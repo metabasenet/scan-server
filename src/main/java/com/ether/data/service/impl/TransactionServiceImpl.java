@@ -1,7 +1,9 @@
 package com.ether.data.service.impl;
 
+import com.ether.data.common.Web3Client;
 import com.ether.data.dao.*;
 import com.ether.data.entity.Block;
+import com.ether.data.entity.Contract;
 import com.ether.data.entity.MethodHash;
 import com.ether.data.entity.TransactionPlatform;
 import com.ether.data.service.TransactionService;
@@ -13,6 +15,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +56,24 @@ public class TransactionServiceImpl implements TransactionService {
         PageHelper.startPage(page, pageSize);
         List<Map> list = transactionMapper.selectAllTransaction();
         return new PageInfo<>(list);
+    }
+
+    @Override
+    public List<Map> getLastedTransfer(String contractAddress, String userAddress)  {
+        userAddress = userAddress.replace("0x", "0x000000000000000000000000");
+        List<Map> mapList = new LinkedList<>();
+        if (contractAddress.startsWith("0x000000000000000000000000000000000000000")) {
+            mapList = transactionMapper.selectPlatformInternalRransaction(userAddress);
+        } else {
+            mapList = transactionErc20Mapper.getContractTransaction(contractAddress, userAddress);
+        }
+        for (Map<String, String> map : mapList) {
+            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
+            map.put("from", fromAddress);
+            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
+            map.put("to", toAddress);
+        }
+        return mapList;
     }
 
     @Override

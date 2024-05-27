@@ -112,6 +112,12 @@
             <version>4.3.0</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.web3j</groupId>-->
+<!--            <artifactId>utils</artifactId>-->
+<!--            <version>4.1.1</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>

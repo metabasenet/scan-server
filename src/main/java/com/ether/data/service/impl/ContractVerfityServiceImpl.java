@@ -86,6 +86,9 @@ public class ContractVerfityServiceImpl implements ContractVerfityService {
             String filePath = rootPath + File.separator + contractVerfityCode.getFilepath();
             String sourceCode = readFile(filePath);
             map.put("sourceCode", sourceCode);
+
+
+
             mapList.add(map);
         }
         return mapList;
