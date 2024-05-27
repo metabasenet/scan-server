@@ -526,12 +526,11 @@
         SELECT A.transactionHash as 'hash',A.`from`, A.`to`, A.`value`, B.timestamp
         FROM `platform_internal_transaction` A
                  LEFT JOIN block B ON A.blockHash = B.hash
-        where (A.`from` = #{userAddress,jdbcType=VARCHAR} or A.`to` = #{userAddress,jdbcType=VARCHAR})
-           or (A.`from` =
-               SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 1, 2) + SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 27, 40)
-            or A.`to` =
-               SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 1, 2) + SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 27, 40)
-            )
+        where A.`from` = #{userAddress,jdbcType=VARCHAR}
+           or A.`to` = #{userAddress,jdbcType=VARCHAR}
+           or A.`from` = CONCAT('0x000000000000000000000000', SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 3, 42))
+           or A.`to` = CONCAT('0x000000000000000000000000', SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 3, 42))
+
         ORDER BY B.timestamp DESC limit 40
     </select>
 
