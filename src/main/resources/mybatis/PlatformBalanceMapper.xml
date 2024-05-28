@@ -111,16 +111,16 @@
 
     <select id="selectAllBalance" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT
-        address,
-        balance,
-        balance /(SELECT SUM(balance) FROM platform_balance)* 100 AS percentage,
-        (SELECT count(1) AS count FROM `transaction` B WHERE B.`from` = address OR B.`to`=address) AS txnCount
+        A.address,
+        CAST(A.balance AS CHAR) as 'balance',
+        A.balance /(SELECT SUM(balance) FROM platform_balance)* 100 AS percentage,
+        (SELECT count(1) AS count FROM `transaction` B WHERE B.`from` = A.address )+(SELECT count(1) AS count FROM
+        `transaction` B WHERE B.`to`=A.address) as txnCount
         FROM
-        platform_balance
+        platform_balance A
         <if test="address != null">
-            where address= #{address,jdbcType=VARCHAR}
+            where A.address= #{address,jdbcType=VARCHAR}
         </if>
-        ORDER BY
-        balance DESC
+        ORDER BY A.balance DESC
     </select>
 </mapper>

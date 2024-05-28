@@ -192,7 +192,7 @@
                B.`timestamp`,
                C.cumulativeGasUsed,
                C.effectiveGasPrice,
-               D.method
+               SUBSTRING_INDEX(D.method, '(', 1) as method
         FROM transaction_erc20 A
                  LEFT JOIN block B ON A.blockHash = B.`hash`
                  LEFT JOIN transaction_receipt C ON A.transactionHash = C.transactionHash
@@ -216,7 +216,7 @@
                C.ercName,
                C.ercSymbol,
                C.decimals,
-               D.method
+               SUBSTRING_INDEX(D.method, '(', 1) as method
         FROM (SELECT * FROM transaction_erc20 WHERE SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')) A
                  LEFT JOIN block B ON A.blockHash = B.`hash`
                  LEFT JOIN contract C ON A.contractAddress = C.contractAddress
@@ -240,7 +240,7 @@
                C.ercName,
                C.ercSymbol,
                C.decimals,
-               D.method
+               SUBSTRING_INDEX(D.method, '(', 1) as method
         FROM (SELECT * FROM transaction_erc20 WHERE SUBSTRING(methodHash, 1, 10) in ('0xddf252ad', '0x8c5be1e5')) A
                  LEFT JOIN block B ON A.blockHash = B.`hash`
                  LEFT JOIN contract C ON A.contractAddress = C.contractAddress

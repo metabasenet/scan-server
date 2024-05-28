@@ -121,15 +121,15 @@
     </update>
 
     <select id="selectContractBalance" parameterType="java.lang.String" resultType="java.util.Map">
-        SELECT contractAddress,
-               address,
-               balance,
-               balance / (SELECT SUM(balance)
-                          FROM (SELECT *
-                                from erc20_balance
-                                WHERE contractAddress = #{contractAddress,jdbcType=VARCHAR}) A) * 100 AS percentage
+        SELECT A.contractAddress,
+               A.address,
+               CAST(A.balance AS CHAR) as 'balance', A.balance / (SELECT SUM(balance)
+                                                                  FROM (SELECT *
+                                                                        from erc20_balance
+                                                                        WHERE contractAddress = #{contractAddress,jdbcType=VARCHAR}) B) *
+                                                     100 AS percentage
         FROM (SELECT * from erc20_balance WHERE contractAddress = #{contractAddress,jdbcType=VARCHAR}) A
-        ORDER BY balance DESC
+        ORDER BY A.balance DESC
     </select>
 
     <select id="selectTokenByAddress" parameterType="java.lang.String" resultType="java.util.Map">
