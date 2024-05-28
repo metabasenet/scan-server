@@ -461,6 +461,22 @@
         order by A.blockNumber desc
     </select>
 
+    <select id="selectTransactionByContractAddress" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT A.`hash`,
+               A.blockHash,
+               A.blockNumber,
+               A.`from` as 'creator',
+               B.transactionHash,
+               B.contractAddress,
+               B.`status`,
+               C.timestamp as 'createTime'
+        FROM `transaction` A
+                 LEFT JOIN transaction_receipt B ON A.`hash` = B.transactionHash
+                 LEFT JOIN block C ON A.blockHash = C.hash
+        WHERE B.`contractAddress` = #{contractAddress,jdbcType=VARCHAR}
+        order by A.blockNumber desc
+    </select>
+
     <select id="selectTransactionByAddress" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT A.`hash`,
                A.blockHash,
@@ -522,7 +538,7 @@
         ORDER BY A.blockNumber DESC
     </select>
 
-    <select id="selectPlatformInternalRransaction" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="selectPlatformInternalTransaction" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT A.transactionHash as 'hash',A.`from`, A.`to`, A.`value`, B.timestamp
         FROM `platform_internal_transaction` A
                  LEFT JOIN block B ON A.blockHash = B.hash

@@ -21,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -87,8 +89,16 @@ public class ContractVerfityServiceImpl implements ContractVerfityService {
             String sourceCode = readFile(filePath);
             map.put("sourceCode", sourceCode);
 
-
-
+            List<String> contractName = new LinkedList<>();
+            List<String> sourceCodeList = Arrays.stream(sourceCode.split("\r\n")).filter(f -> f.contains("contract")).collect(Collectors.toList());
+            Pattern pattern = Pattern.compile("^\\s{0,}contract\\s{1,}[a-zA-Z_][a-zA-z0-9]{0,}");
+            for (String contractNameSource : sourceCodeList) {
+                Matcher matcher = pattern.matcher(contractNameSource);
+                while (matcher.find()) {
+                    contractName.add(matcher.group(0).replace("contract","").replace(" ",""));
+                }
+            }
+            map.put("contractName", contractName);
             mapList.add(map);
         }
         return mapList;
@@ -120,7 +130,7 @@ public class ContractVerfityServiceImpl implements ContractVerfityService {
                         methodHash.setHash("0x" + hashMapping.split(":")[0]);
                         methodHash.setType(1);
                     } else {
-                        methodHash.setHash("0x" + hashMapping.split(":")[0].substring(0,8));
+                        methodHash.setHash("0x" + hashMapping.split(":")[0].substring(0, 8));
                         methodHash.setType(2);
                     }
                     methodHashMapper.insert(methodHash);

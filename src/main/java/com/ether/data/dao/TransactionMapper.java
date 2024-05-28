@@ -69,11 +69,13 @@ public interface TransactionMapper {
 
     Map selectTransactionByHash(String hash);
 
+    Map selectTransactionByContractAddress(String contractAddress);
+
     List<Map> selectTransactionByBlockHash(String blockHash);
 
     List<Map> selectTransactionByAddress(String address);
 
     List<Map> selectTransactionCacheInfo(@Param("blockNumber") Long blockNumber);
 
-    List<Map> selectPlatformInternalRransaction(@Param("userAddress") String userAddress);
+    List<Map> selectPlatformInternalTransaction(@Param("userAddress") String userAddress);
 }

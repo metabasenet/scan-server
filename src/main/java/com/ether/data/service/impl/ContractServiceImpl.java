@@ -3,6 +3,7 @@ package com.ether.data.service.impl;
 import com.ether.data.dao.ContractMapper;
 import com.ether.data.dao.Erc20BalanceMapper;
 import com.ether.data.dao.TransactionErc20Mapper;
+import com.ether.data.dao.TransactionMapper;
 import com.ether.data.entity.Contract;
 import com.ether.data.service.ContractService;
 import com.github.pagehelper.PageHelper;
@@ -22,6 +23,8 @@ public class ContractServiceImpl implements ContractService {
     private TransactionErc20Mapper transactionErc20Mapper;
     @Autowired
     private Erc20BalanceMapper erc20BalanceMapper;
+    @Autowired
+    private TransactionMapper transactionMapper;
 
     @Override
     public PageInfo<Map> getContractByPage(Integer page, Integer pageSize) {
@@ -32,7 +35,13 @@ public class ContractServiceImpl implements ContractService {
 
     public Map getContractByAddress(String address) {
         PageHelper.clearPage();
-        return contractMapper.selectByContractAddress(address);
+
+        Map map = contractMapper.selectByContractAddress(address);
+        if (map == null) {
+            return transactionMapper.selectTransactionByContractAddress(address);
+        } else {
+            return map;
+        }
     }
 
     //contract address transaction
