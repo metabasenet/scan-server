@@ -16,9 +16,9 @@ public class PlatformBalanceServiceImpl implements PlatformBalanceService {
     private PlatformBalanceMapper platformBalanceMapper;
 
     @Override
-    public PageInfo<Map> getBalanceByPage(Integer page, Integer pageSize) {
+    public PageInfo<Map> getBalanceByPage(String address,  Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
-        List<Map> list = platformBalanceMapper.selectAllBalance(null);
+        List<Map> list = platformBalanceMapper.selectAllBalance(address);
         return new PageInfo<>(list);
     }
 

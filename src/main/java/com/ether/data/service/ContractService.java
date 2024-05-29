@@ -16,7 +16,7 @@ public interface ContractService {
 
     PageInfo<Map> selectAllContractTransation(Integer page, Integer pageSize);
 
-    PageInfo<Map> getContractBalanceByPage(Integer page, Integer pageSize, String contractAddress);
+    PageInfo<Map> getContractBalanceByPage(Integer page, Integer pageSize, String contractAddress,String address);
 
     Long getContractTransationCountByAddress(String contractAddress);
 

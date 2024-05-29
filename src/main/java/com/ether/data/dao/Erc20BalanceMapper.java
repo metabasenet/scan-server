@@ -56,7 +56,7 @@ public interface Erc20BalanceMapper {
      */
     int updateByPrimaryKey(Erc20Balance record);
 
-    List<Map> selectContractBalance(@Param("contractAddress") String contractAddress);
+    List<Map> selectContractBalance(@Param("contractAddress") String contractAddress, @Param("address") String address);
 
     List<Map> selectTokenByAddress(@Param("address") String address);
 }

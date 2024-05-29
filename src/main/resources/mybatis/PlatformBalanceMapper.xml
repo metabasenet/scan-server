@@ -119,7 +119,7 @@
         FROM
         platform_balance A
         <if test="address != null">
-            where A.address= #{address,jdbcType=VARCHAR}
+            where A.address like CONCAT('%',#{address,jdbcType=VARCHAR},'%')
         </if>
         ORDER BY A.balance DESC
     </select>

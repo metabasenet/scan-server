@@ -83,9 +83,9 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public PageInfo<Map> getContractBalanceByPage(Integer page, Integer pageSize, String contractAddress) {
+    public PageInfo<Map> getContractBalanceByPage(Integer page, Integer pageSize, String contractAddress, String address) {
         PageHelper.startPage(page, pageSize);
-        List<Map> list = erc20BalanceMapper.selectContractBalance(contractAddress);
+        List<Map> list = erc20BalanceMapper.selectContractBalance(contractAddress, address);
         return new PageInfo<>(list);
     }
 

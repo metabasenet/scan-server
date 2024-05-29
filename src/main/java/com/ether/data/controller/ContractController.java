@@ -54,8 +54,8 @@ public class ContractController {
     }
 
     @GetMapping("/getContactBalance")
-    public JSONObject getContactBalance(Integer page, Integer pageSize, String contractAddress) {
-        PageInfo<Map> contractBalanceList = contractServiceImpl.getContractBalanceByPage(page, pageSize, contractAddress);
+    public JSONObject getContactBalance(Integer page, Integer pageSize, String contractAddress,String address) {
+        PageInfo<Map> contractBalanceList = contractServiceImpl.getContractBalanceByPage(page, pageSize, contractAddress, address);
         return ResultUtils.successResult(contractBalanceList);
     }
 

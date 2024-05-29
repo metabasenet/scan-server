@@ -129,6 +129,9 @@
                                                                         WHERE contractAddress = #{contractAddress,jdbcType=VARCHAR}) B) *
                                                      100 AS percentage
         FROM (SELECT * from erc20_balance WHERE contractAddress = #{contractAddress,jdbcType=VARCHAR}) A
+        <if test="address != null">
+            where A.address like CONCAT('%',#{address,jdbcType=VARCHAR},'%')
+        </if>
         ORDER BY A.balance DESC
     </select>
 

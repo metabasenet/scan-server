@@ -21,8 +21,8 @@ public class PlatformBalanceController {
     private PlatformBalanceService platformBalanceServiceImpl;
 
     @GetMapping("/page")
-    public JSONObject pageBalance(Integer page, Integer pageSize) {
-        PageInfo<Map> pageInfo = platformBalanceServiceImpl.getBalanceByPage(page, pageSize);
+    public JSONObject pageBalance(String address, Integer page, Integer pageSize) {
+        PageInfo<Map> pageInfo = platformBalanceServiceImpl.getBalanceByPage(address, page, pageSize);
         return ResultUtils.successResult(pageInfo);
     }
 
