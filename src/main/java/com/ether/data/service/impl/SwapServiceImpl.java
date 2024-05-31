@@ -2,7 +2,7 @@ package com.ether.data.service.impl;
 
 import com.ether.data.dao.ContractMapper;
 import com.ether.data.dao.SwapPairsMapper;
-import com.ether.data.dao.SwapTxMapper;
+import com.ether.data.dao.SwapTxPriceMapper;
 import com.ether.data.entity.Contract;
 import com.ether.data.entity.SwapPairs;
 import com.ether.data.service.SwapService;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Service
 public class SwapServiceImpl implements SwapService {
     @Autowired
-    private SwapTxMapper swapTxMapper;
+    private SwapTxPriceMapper swapTxPriceMapper;
 
     @Autowired
     private SwapPairsMapper swapPairsMapper;
@@ -31,15 +31,15 @@ public class SwapServiceImpl implements SwapService {
         SwapPairs swapPairs01 = swapPairsMapper.selectPairByTokenAddress(tokenAddress1, tokenAddress2);
         if (swapPairs01 != null) {
             PageHelper.startPage(page, pageSize);
-            List<Map> mapList = swapTxMapper.getPairPrice01(swapPairs01.getPairAddress(), type);
-            mapList=updateOpenPrice(mapList);
+            List<Map> mapList = swapTxPriceMapper.getPairPrice01(swapPairs01.getPairAddress(), type);
+            mapList = updateOpenPrice(mapList);
             return new PageInfo<>(mapList);
         }
         SwapPairs swapPairs10 = swapPairsMapper.selectPairByTokenAddress(tokenAddress2, tokenAddress1);
         if (swapPairs10 != null) {
             PageHelper.startPage(page, pageSize);
-            List<Map> mapList = swapTxMapper.getPairPrice10(swapPairs10.getPairAddress(), type);
-            mapList=updateOpenPrice(mapList);
+            List<Map> mapList = swapTxPriceMapper.getPairPrice10(swapPairs10.getPairAddress(), type);
+            mapList = updateOpenPrice(mapList);
             return new PageInfo<>(mapList);
         }
         return new PageInfo<>(null);
@@ -60,13 +60,13 @@ public class SwapServiceImpl implements SwapService {
         SwapPairs swapPairs01 = swapPairsMapper.selectPairByTokenAddress(tokenAddress1, tokenAddress2);
         if (swapPairs01 != null) {
             PageHelper.startPage(page, pageSize);
-            List<Map> mapList = swapTxMapper.getPairPriceFlow01(swapPairs01.getPairAddress());
+            List<Map> mapList = swapTxPriceMapper.getPairPriceFlow01(swapPairs01.getPairAddress());
             return new PageInfo<>(mapList);
         }
         SwapPairs swapPairs10 = swapPairsMapper.selectPairByTokenAddress(tokenAddress2, tokenAddress1);
         if (swapPairs10 != null) {
             PageHelper.startPage(page, pageSize);
-            List<Map> mapList = swapTxMapper.getPairPriceFlow01(swapPairs10.getPairAddress());
+            List<Map> mapList = swapTxPriceMapper.getPairPriceFlow01(swapPairs10.getPairAddress());
             return new PageInfo<>(mapList);
         }
         return new PageInfo<>(null);

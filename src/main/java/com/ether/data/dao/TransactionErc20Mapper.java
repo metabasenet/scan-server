@@ -72,5 +72,7 @@ public interface TransactionErc20Mapper {
 
     List<Map> selectInternalTransactionByAddress(String address);
 
-    List<Map> getContractTransaction(String contractaddress,String address);
+    List<Map> getContractTransaction(String contractaddress, String address);
+
+    List<Map> getTransactionLog(String contractAddress,String numberSql,  String topicSql, Integer limitCount, String order);
 }

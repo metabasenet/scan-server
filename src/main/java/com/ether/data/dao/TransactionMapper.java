@@ -78,4 +78,6 @@ public interface TransactionMapper {
     List<Map> selectTransactionCacheInfo(@Param("blockNumber") Long blockNumber);
 
     List<Map> selectPlatformInternalTransaction(@Param("userAddress") String userAddress);
+
+    List<Map> selectPlatformInternalTransactionLog(String numberSql,  String topicSql, Integer limitCount, String order);
 }

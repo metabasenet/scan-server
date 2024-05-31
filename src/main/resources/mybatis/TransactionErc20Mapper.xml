@@ -184,7 +184,7 @@
                A.blockHash,
                A.contractAddress,
                A.`index`,
-               SUBSTRING(A.methodHash, 1, 10) as methodHash,
+               SUBSTRING(A.methodHash, 1, 10)    as methodHash,
                A.blockNumber,
                A.`from`,
                A.`to`,
@@ -207,7 +207,7 @@
                A.blockHash,
                A.contractAddress,
                A.`index`,
-               SUBSTRING(A.methodHash, 1, 10) as methodHash,
+               SUBSTRING(A.methodHash, 1, 10)    as methodHash,
                A.blockNumber,
                A.`from`,
                A.`to`,
@@ -231,7 +231,7 @@
                A.blockHash,
                A.contractAddress,
                A.`index`,
-               SUBSTRING(A.methodHash, 1, 10) as methodHash,
+               SUBSTRING(A.methodHash, 1, 10)    as methodHash,
                A.blockNumber,
                A.`from`,
                A.`to`,
@@ -319,5 +319,30 @@
         where (A.from = #{address,jdbcType=VARCHAR} or A.to = #{address,jdbcType=VARCHAR})
           and A.contractAddress = #{contractaddress,jdbcType=VARCHAR}
         order by A.blockNumber desc, A.transactionHash asc, A.index asc limit 40
+    </select>
+
+    <select id="getTransactionLog" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        A.transactionHash,
+        A.methodHash as 'topic0',
+        A.`from` as 'topic1',
+        A.`to` as 'topic2',
+        A.`topic3` as 'topic3',
+        A.`value` as 'data',
+        A.blockNumber,
+        B.`timestamp`
+        FROM transaction_erc20 A
+        LEFT JOIN block B ON A.blockHash = B.`hash`
+        where A.contractAddress = #{contractAddress,jdbcType=VARCHAR}
+        <if test="numberSql != null">
+            and ${numberSql}
+        </if>
+        <if test="topicSql != null">
+            and ${topicSql}
+        </if>
+        order by A.blockNumber ${order}, A.transactionHash ${order}, A.index ${order}
+        <if test="limitCount > 0">
+            limit #{limitCount,jdbcType=BIGINT}
+        </if>
     </select>
 </mapper>

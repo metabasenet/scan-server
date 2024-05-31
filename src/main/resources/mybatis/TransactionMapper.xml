@@ -379,7 +379,7 @@
                A.blockNumber,
                A.`from`,
                A.`to`,
-               A.`value`,
+               CAST(A.`value` as char ) as 'value',
                A.gasPrice,
                A.gasLimit,
                A.maxPriorityFeePerGas,
@@ -408,7 +408,7 @@
                A.blockNumber,
                A.`from`,
                A.`to`,
-               A.`value`,
+               CAST(A.`value` as char ) as 'value',
                A.gasPrice,
                A.gasLimit,
                A.maxPriorityFeePerGas,
@@ -437,7 +437,7 @@
                A.blockNumber,
                A.`from`,
                A.`to`,
-               A.`value`,
+               CAST(A.`value` as char ) as 'value',
                A.gasPrice,
                A.gasLimit,
                A.maxPriorityFeePerGas,
@@ -483,7 +483,7 @@
                A.blockNumber,
                A.`from`,
                A.`to`,
-               A.`value`,
+               CAST(A.`value` as char ) as 'value',
                A.gasPrice,
                A.gasLimit,
                A.maxPriorityFeePerGas,
@@ -514,7 +514,7 @@
                A.blockNumber,
                A.`from`,
                A.`to`,
-               A.`value`,
+               CAST(A.`value` as char ) as 'value',
                A.gasPrice,
                A.gasLimit,
                A.maxPriorityFeePerGas,
@@ -548,6 +548,32 @@
            or A.`to` = CONCAT('0x000000000000000000000000', SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 3, 42))
 
         ORDER BY B.timestamp DESC limit 40
+    </select>
+
+    <select id="selectPlatformInternalTransactionLog" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+        A.transactionHash,
+        A.methodHash as 'topic0',
+        A.`from` as 'topic1',
+        A.`to` as 'topic2',
+        A.`topic3` as 'topic3',
+        A.`value` as 'data',
+        A.blockNumber,
+        B.`timestamp`,
+        CAST(A.index as char ) as 'index'
+        FROM platform_internal_transaction A
+        LEFT JOIN block B ON A.blockHash = B.`hash`
+        where
+        <if test="numberSql != null">
+             ${numberSql}
+        </if>
+        <if test="topicSql != null">
+            and ${topicSql}
+        </if>
+        order by A.blockNumber ${order}, A.transactionHash ${order}, A.index ${order}
+        <if test="limitCount > 0">
+            limit #{limitCount,jdbcType=BIGINT}
+        </if>
     </select>
 
 </mapper>
