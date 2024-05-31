@@ -304,8 +304,10 @@
                B.`timestamp` as  'utc'
         from platform_internal_transaction A
                  left join block B on A.blockHash = B.`hash`
-        where A.`from` = #{address,jdbcType=VARCHAR}
-           or A.`to` = #{address,jdbcType=VARCHAR}
+        where A.`from` = #{userAddress,jdbcType=VARCHAR}
+           or A.`to` = #{userAddress,jdbcType=VARCHAR}
+           or A.`from` = CONCAT('0x000000000000000000000000', SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 3, 42))
+           or A.`to` = CONCAT('0x000000000000000000000000', SUBSTRING(#{userAddress,jdbcType=VARCHAR}, 3, 42))
         order by B.`timestamp` desc
     </select>
 

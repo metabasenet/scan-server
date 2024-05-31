@@ -67,12 +67,14 @@ public class TransactionController {
         return ResultUtils.successResult(mapList);
     }
 
+    //discard
     @GetMapping("/getPlatformTransactionInfo")
     public JSONObject getPlatformTransactionInfo(String transactionHash) {
         List<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionInfo(transactionHash);
         return ResultUtils.successResult(mapList);
     }
 
+    //discard
     @GetMapping("/getPlatformTransactionByAddress")
     public JSONObject getPlatformTransactionByAddress(String address, Integer page, Integer pageSize) {
         PageInfo<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionByAddress(address, page, pageSize);

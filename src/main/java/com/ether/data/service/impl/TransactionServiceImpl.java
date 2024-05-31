@@ -1,9 +1,6 @@
 package com.ether.data.service.impl;
 
-import com.ether.data.common.Web3Client;
 import com.ether.data.dao.*;
-import com.ether.data.entity.Block;
-import com.ether.data.entity.Contract;
 import com.ether.data.entity.MethodHash;
 import com.ether.data.entity.TransactionPlatform;
 import com.ether.data.service.TransactionService;
@@ -135,6 +132,12 @@ public class TransactionServiceImpl implements TransactionService {
     public PageInfo<Map> getInternalTransactionByAddress(String address, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
         List<Map> list = transactionErc20Mapper.selectInternalTransactionByAddress(address);
+        for (Map<String, String> map : list) {
+            String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");
+            map.put("from", fromAddress);
+            String toAddress = map.get("to").replace("0x000000000000000000000000", "0x");
+            map.put("to", toAddress);
+        }
         return new PageInfo<>(list);
     }
 
