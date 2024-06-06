@@ -20,8 +20,8 @@
     <select id="getPairPrice01" parameterType="java.lang.String" resultType="java.util.Map">
         select * from (
         SELECT min(rate01) as `min`,max(rate01) as `max`,
-        (SELECT B.rate10 FROM swap_tx_price B WHERE B.time = min( A.time ) order by B.`index` asc limit 1) AS 'first',
-        (SELECT B.rate10 FROM swap_tx_price B WHERE B.time = max( A.time ) order by B.`index` desc limit 1) AS 'last',
+        (SELECT B.rate01 FROM swap_tx_price B WHERE B.time = min( A.time ) order by B.`index` asc limit 1) AS 'first',
+        (SELECT B.rate01 FROM swap_tx_price B WHERE B.time = max( A.time ) order by B.`index` desc limit 1) AS 'last',
         <if test="type != null and type == 1">
             DATE_FORMAT(A.time, '%Y-%m-%d %H:%i:%s') as `time`
         </if>

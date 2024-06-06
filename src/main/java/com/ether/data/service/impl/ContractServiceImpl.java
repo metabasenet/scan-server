@@ -60,6 +60,7 @@ public class ContractServiceImpl implements ContractService {
     //ordinary address transaction
     public PageInfo<Map> getContractTransactionByAddress(String address, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
+        address = address.replace("0x", "0x000000000000000000000000");
         List<Map> list = transactionErc20Mapper.getContractTransactionByAddress(address);
         for (Map<String, String> map : list) {
             String fromAddress = map.get("from").replace("0x000000000000000000000000", "0x");

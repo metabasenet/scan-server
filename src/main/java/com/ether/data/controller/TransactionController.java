@@ -68,18 +68,18 @@ public class TransactionController {
     }
 
     //discard
-    @GetMapping("/getPlatformTransactionInfo")
-    public JSONObject getPlatformTransactionInfo(String transactionHash) {
-        List<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionInfo(transactionHash);
-        return ResultUtils.successResult(mapList);
-    }
+//    @GetMapping("/getPlatformTransactionInfo")
+//    public JSONObject getPlatformTransactionInfo(String transactionHash) {
+//        List<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionInfo(transactionHash);
+//        return ResultUtils.successResult(mapList);
+//    }
 
     //discard
-    @GetMapping("/getPlatformTransactionByAddress")
-    public JSONObject getPlatformTransactionByAddress(String address, Integer page, Integer pageSize) {
-        PageInfo<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionByAddress(address, page, pageSize);
-        return ResultUtils.successResult(mapList);
-    }
+//    @GetMapping("/getPlatformTransactionByAddress")
+//    public JSONObject getPlatformTransactionByAddress(String address, Integer page, Integer pageSize) {
+//        PageInfo<TransactionPlatform> mapList = transactionServiceImpl.getPlatformTransactionByAddress(address, page, pageSize);
+//        return ResultUtils.successResult(mapList);
+//    }
 
     @GetMapping("/getInternalTransactionInfo")
     public JSONObject getInternalTransactionInfo(String transactionHash) {
