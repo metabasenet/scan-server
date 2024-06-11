@@ -19,7 +19,7 @@ spring:
 #      url: 'jdbc:mysql://127.0.0.1:3307/mnt_block?useUnicode=true&characterEncoding=utf-8&useSSL=FALSE&allowMultiQueries=true'
 #      username: mnt
 #      password: 1234qwer
-      url: 'jdbc:mysql://192.168.0.102:3306/mnt_block?useUnicode=true&characterEncoding=utf-8&useSSL=FALSE&allowMultiQueries=true'
+      url: 'jdbc:mysql://192.168.0.102:3306/eth?useUnicode=true&characterEncoding=utf-8&useSSL=FALSE&allowMultiQueries=true'
       username: root
       password: 123456
       initial-size: 5
