@@ -15,6 +15,7 @@ public class EtherApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(EtherApplication.class, args);
+        
     }
 
 }

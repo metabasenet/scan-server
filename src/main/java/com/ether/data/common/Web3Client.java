@@ -32,5 +32,6 @@ public class Web3Client {
         } catch (Exception ex) {
             return null;
         }
+
     }
 }
